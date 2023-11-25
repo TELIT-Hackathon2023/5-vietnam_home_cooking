@@ -4,10 +4,14 @@ import './LandingPage.css';
 
 const LandingPage = () => {
   return (
-    <Box bg='grey' w='74rem' h='46.875rem' className='content-container'>
-      <Box />
-      <Box />
-    </Box>
+    <div className='content-container'>
+      <Box bg='lightgrey' w='74rem' h='46.875rem'>
+        <div className='img-container'>
+          <img src='' />
+        </div>
+        <Box />
+      </Box>
+    </div>
   );
 };
 
