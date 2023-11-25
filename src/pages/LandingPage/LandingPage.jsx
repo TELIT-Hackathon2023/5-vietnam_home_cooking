@@ -9,8 +9,8 @@ const LandingPage = () => {
 
   return (
     <div className='content-container'>
-      <Box bg='white' w='74rem' h='46.875rem' borderRadius='2rem'>
-        {login ? <LoginForm /> : <RegisterForm />}
+      <Box className='content-box'>
+        {login ? <LoginForm setLogin={setLogin} /> : <RegisterForm setLogin={setLogin} />}
       </Box>
     </div>
   );

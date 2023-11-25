@@ -9,87 +9,149 @@ import {
   FormHelperText,
   FormLabel,
   HStack,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
+  Stack,
+  Text,
   VStack,
 } from '@chakra-ui/react';
 import './registerForm.css';
 import { Field, Form, Formik } from 'formik';
+import { CloseIcon } from '@chakra-ui/icons';
+import axios from 'axios';
 
-const RegisterForm = () => {
+const LoginForm = ({ setLogin }) => {
   const handleSubmit = (values, actions) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+    const body = {
+      name: 'Eduard',
+      surname: 'Ridilla',
+      mobileNumber: '+421917184448',
+      email: 'ridilla.eduard@gmail.com',
+      companyId: 69,
+      plateNumber: 'SW00000',
+    };
+
+    axios.post('https://telekomparking.website.tuke.sk/api/register', body).then((res) => {
       actions.setSubmitting(false);
-    }, 1000);
+      console.log(res);
+    });
+
+    // setTimeout(() => {
+    //   alert(JSON.stringify(values, null, 2));
+    //   actions.setSubmitting(false);
+    // }, 1000);
   };
 
-  const handleForgotPw = () => {
-    alert('forgot pw click');
+  const handleBackClick = () => {
+    setLogin(1);
   };
 
   return (
-    <HStack h='100%' w='100%'>
-      <div className='login-img-container'></div>
-      <Container className='form-container' h='100%' w='38rem'>
-        <VStack className='form-stack'>
-          <p className='form-heading'>Sign in to Parking</p>
-          <p className='form-subtext'>Please enter your detail below to sign in</p>
-          <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>
-            {(props) => (
-              <Form>
-                <Field name='email'>
-                  {({ field, form }) => (
-                    <FormControl
-                      isInvalid={form.errors.name && form.touched.name}
-                      className='email-input'
-                    >
-                      <FormLabel className='form-label'>Personal ID / E-mail Address</FormLabel>
-                      <Input {...field} type='email' />
-                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name='password'>
-                  {({ field, form }) => (
-                    <FormControl isInvalid={form.errors.password && form.touched.password}>
-                      <Flex justify='space-between'>
-                        <Box>
-                          <FormLabel className='form-label'>Your password</FormLabel>
-                        </Box>
-                        <Box>
-                          <Box
-                            as='button'
-                            type='button'
-                            className='form-label forgot-pw-button'
-                            onClick={handleForgotPw}
-                          >
-                            Forgot password?
-                          </Box>
-                        </Box>
-                      </Flex>
-                      <Input {...field} type='password' />
-                      <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Button
-                  mt={4}
-                  color='white'
-                  bg='#E10075'
-                  type='submit'
-                  isLoading={props.isSubmitting}
-                >
-                  Sign In
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </VStack>
+    <>
+      <Container className='back-button-container'>
+        <IconButton
+          bg='white'
+          aria-label='Back button'
+          icon={<CloseIcon />}
+          onClick={handleBackClick}
+        />
       </Container>
-    </HStack>
+
+      <Stack direction='row' h='100%' w='100%'>
+        <div className='register-img-container'></div>
+        <Container className='form-container' h='100%' w='38rem'>
+          <Stack direction='column' className='form-stack'>
+            <Text mb='2.5rem' className='form-heading'>
+              Claim Your Spot - Register below
+            </Text>
+            <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>
+              {(props) => (
+                <Form>
+                  <Field name='name'>
+                    {({ field, form }) => (
+                      <FormControl
+                        className='register-input'
+                        isInvalid={form.errors.name && form.touched.name}
+                      >
+                        <Input {...field} placeholder='Name' />
+                        <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name='surname'>
+                    {({ field, form }) => (
+                      <FormControl
+                        className='register-input'
+                        isInvalid={form.errors.password && form.touched.password}
+                      >
+                        <Input {...field} placeholder='Surname' />
+                        <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name='mobileNumber'>
+                    {({ field, form }) => (
+                      <FormControl
+                        className='register-input'
+                        isInvalid={form.errors.password && form.touched.password}
+                      >
+                        <Input {...field} placeholder='Mobile number' />
+                        <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name='companyEmail'>
+                    {({ field, form }) => (
+                      <FormControl
+                        className='register-input'
+                        isInvalid={form.errors.password && form.touched.password}
+                      >
+                        <Input {...field} placeholder='Company email' />
+                        <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name='personalId'>
+                    {({ field, form }) => (
+                      <FormControl
+                        className='register-input'
+                        isInvalid={form.errors.password && form.touched.password}
+                      >
+                        <Input {...field} placeholder='Personal ID' />
+                        <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name='licencePlateNumber'>
+                    {({ field, form }) => (
+                      <FormControl
+                        className='register-input'
+                        isInvalid={form.errors.password && form.touched.password}
+                      >
+                        <Input {...field} placeholder='License plate number' />
+                        <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Button
+                    mt={4}
+                    color='white'
+                    bg='#E10075'
+                    type='submit'
+                    isLoading={props.isSubmitting}
+                  >
+                    Confirm
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          </Stack>
+        </Container>
+      </Stack>
+    </>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

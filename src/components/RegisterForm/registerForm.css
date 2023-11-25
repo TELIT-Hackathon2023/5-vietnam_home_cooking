@@ -1,4 +1,4 @@
-.login-img-container {
+.register-img-container {
     height: 100%;
     width: 36rem;
     background-image: url("../../assets/register_image.png");
@@ -42,3 +42,15 @@
     cursor: pointer;
 }
 
+.back-button-container {
+    padding: 0 !important;
+    margin: 2rem !important;
+    width: auto !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.register-input {
+    margin-bottom: 1.5rem;
+}
