@@ -2,6 +2,12 @@
     height: 100%;
     width: 36rem;
     background-image: url("../../assets/register_image.png");
+    padding-bottom: 9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
 }
 
 .form-container {
@@ -53,4 +59,33 @@
 
 .register-input {
     margin-bottom: 1.5rem;
+}
+
+@media screen and (max-width: 1200px) {
+    .register-img-container {
+        height: 16rem;
+        width: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 0;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    .form-stack {
+        align-items: center !important;
+        padding-top: 1rem;
+    }
+
+    .register-button-container {
+        top: 16rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .form-container {
+        width: auto !important;
+        margin: 0 !important;
+    }
 }

@@ -15,17 +15,59 @@ import {
   Image,
   Stack,
   VStack,
+  ButtonGroup,
 } from '@chakra-ui/react';
 import './loginForm.css';
 import { Field, Form, Formik } from 'formik';
 import LoginImage from '../../assets/login_logo.svg';
+import { md5 } from 'js-md5';
+import axios from 'axios';
 
 const LoginForm = ({ setLogin }) => {
   const handleSubmit = (values, actions) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-    }, 1000);
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Cookie', '_nss=1');
+    myHeaders.append('Access-Control-Allow-Origin', 'http://localhost:5173');
+    myHeaders.append('Access-Control-Allow-Methods', '*');
+    myHeaders.append('Access-Control-Allow-Headers', '*');
+
+    const raw = JSON.stringify({
+      email: 'ridilla.eduard@gmail.com',
+      password: 'ff01da0dc1d54f80f25a50bcf16e4d7a',
+    });
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch('https://telekomparking.website.tuke.sk/api/login', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error));
+
+    // const payload = {
+    //   email: values.email,
+    //   password: md5(values.password),
+    // };
+
+    // axios
+    //   .post('https://telekomparking.website.tuke.sk/api/login', payload, {
+    //     headers: {
+    //       'Access-Control-Allow-Origin': '*',
+    //       'Access-Control-Allow-Methods': '*',
+    //       'Access-Control-Allow-Headers': '*',
+    //     },
+    //   })
+    //   .then((res) => console.log(res));
+
+    // setTimeout(() => {
+    //   alert(JSON.stringify(values, null, 2));
+    //   actions.setSubmitting(false);
+    // }, 1000);
   };
 
   const handleForgotPw = () => {
@@ -57,7 +99,10 @@ const LoginForm = ({ setLogin }) => {
 
   return (
     <>
-      <Container className='register-button-container'>
+      <Container
+        className='register-button-container'
+        display={stackDirection === 'row' ? 'block' : 'none'}
+      >
         <HStack>
           <p className='register-label'>Don't have an account?</p>
           <Button
@@ -115,15 +160,32 @@ const LoginForm = ({ setLogin }) => {
                       </FormControl>
                     )}
                   </Field>
-                  <Button
-                    mt={4}
-                    color='white'
-                    bg='#E10075'
-                    type='submit'
-                    isLoading={props.isSubmitting}
-                  >
-                    Sign In
-                  </Button>
+                  <ButtonGroup isAttached w='100%'>
+                    <Button
+                      mt={4}
+                      color='white'
+                      bg='#E10075'
+                      type='submit'
+                      isLoading={props.isSubmitting}
+                      w={stackDirection === 'column' ? '50%' : ''}
+                    >
+                      Sign In
+                    </Button>
+                    {stackDirection === 'column' ? (
+                      <Button
+                        variant='outline'
+                        color='#E10075'
+                        borderColor='#E10075'
+                        onClick={handleRegisterClick}
+                        mt='1rem'
+                        w='50%'
+                      >
+                        Request access
+                      </Button>
+                    ) : (
+                      ''
+                    )}
+                  </ButtonGroup>
                 </Form>
               )}
             </Formik>

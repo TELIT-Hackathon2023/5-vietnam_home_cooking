@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
+  ButtonGroup,
   Container,
   Flex,
   FormControl,
@@ -10,6 +11,7 @@ import {
   FormLabel,
   HStack,
   IconButton,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
@@ -21,9 +23,10 @@ import './registerForm.css';
 import { Field, Form, Formik } from 'formik';
 import { CloseIcon } from '@chakra-ui/icons';
 import axios from 'axios';
+import RegisterImage from '../../assets/register_logo.svg';
 
 const LoginForm = ({ setLogin }) => {
-  const handleSubmit = (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const body = {
       name: 'Eduard',
       surname: 'Ridilla',
@@ -33,10 +36,33 @@ const LoginForm = ({ setLogin }) => {
       plateNumber: 'SW00000',
     };
 
-    axios.post('https://telekomparking.website.tuke.sk/api/register', body).then((res) => {
-      actions.setSubmitting(false);
-      console.log(res);
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Cookie', '_nss=1');
+    myHeaders.append('Access-Control-Allow-Origin', '*');
+    myHeaders.append('Access-Control-Allow-Methods', '*');
+    myHeaders.append('Access-Control-Allow-Headers', '*');
+
+    const raw = JSON.stringify({
+      name: 'Eduard',
+      surname: 'Ridilla',
+      mobileNumber: '+421917184448',
+      email: 'ridilla.eduard@gmail.com',
+      companyId: 69,
+      plateNumber: 'SW00000',
     });
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    fetch('https://telekomparking.website.tuke.sk/api/register', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error));
 
     // setTimeout(() => {
     //   alert(JSON.stringify(values, null, 2));
@@ -48,9 +74,31 @@ const LoginForm = ({ setLogin }) => {
     setLogin(1);
   };
 
+  const [stackDirection, setStackDirection] = useState('row');
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1200) {
+        setStackDirection('column');
+      } else {
+        setStackDirection('row');
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <Container className='back-button-container'>
+      <Container
+        className='back-button-container'
+        display={stackDirection === 'row' ? 'block' : 'none'}
+      >
         <IconButton
           bg='white'
           aria-label='Back button'
@@ -59,8 +107,10 @@ const LoginForm = ({ setLogin }) => {
         />
       </Container>
 
-      <Stack direction='row' h='100%' w='100%'>
-        <div className='register-img-container'></div>
+      <Stack direction={stackDirection} h='100%' w='100%'>
+        <div className='register-img-container'>
+          <Image src={RegisterImage} />
+        </div>
         <Container className='form-container' h='100%' w='38rem'>
           <Stack direction='column' className='form-stack'>
             <Text mb='2.5rem' className='form-heading'>
@@ -135,15 +185,32 @@ const LoginForm = ({ setLogin }) => {
                       </FormControl>
                     )}
                   </Field>
-                  <Button
-                    mt={4}
-                    color='white'
-                    bg='#E10075'
-                    type='submit'
-                    isLoading={props.isSubmitting}
-                  >
-                    Confirm
-                  </Button>
+                  <ButtonGroup isAttached w='100%'>
+                    {stackDirection === 'column' ? (
+                      <Button
+                        variant='outline'
+                        color='#E10075'
+                        borderColor='#E10075'
+                        onClick={handleBackClick}
+                        mt='1rem'
+                        w='50%'
+                      >
+                        Cancel
+                      </Button>
+                    ) : (
+                      ''
+                    )}
+                    <Button
+                      mt={4}
+                      color='white'
+                      bg='#E10075'
+                      type='submit'
+                      isLoading={props.isSubmitting}
+                      w={stackDirection === 'column' ? '50%' : ''}
+                    >
+                      Confirm
+                    </Button>
+                  </ButtonGroup>
                 </Form>
               )}
             </Formik>
