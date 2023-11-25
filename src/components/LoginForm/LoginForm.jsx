@@ -161,16 +161,6 @@ const LoginForm = ({ setLogin }) => {
                     )}
                   </Field>
                   <ButtonGroup isAttached w='100%'>
-                    <Button
-                      mt={4}
-                      color='white'
-                      bg='#E10075'
-                      type='submit'
-                      isLoading={props.isSubmitting}
-                      w={stackDirection === 'column' ? '50%' : ''}
-                    >
-                      Sign In
-                    </Button>
                     {stackDirection === 'column' ? (
                       <Button
                         variant='outline'
@@ -185,6 +175,16 @@ const LoginForm = ({ setLogin }) => {
                     ) : (
                       ''
                     )}
+                    <Button
+                      mt={4}
+                      color='white'
+                      bg='#E10075'
+                      type='submit'
+                      isLoading={props.isSubmitting}
+                      w={stackDirection === 'column' ? '50%' : ''}
+                    >
+                      Sign In
+                    </Button>
                   </ButtonGroup>
                 </Form>
               )}
