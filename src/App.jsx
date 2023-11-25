@@ -1,15 +1,10 @@
-import { useState } from 'react'
-import {Button} from "@chakra-ui/react";
 import './App.css'
+import LoginForm from "./components/LoginForm/LoginForm.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <Button colorScheme='blue' onClick={() => setCount((count) => count + 1)}>
-        count is {count}
-      </Button>
+      <LoginForm />
     </>
   )
 }
