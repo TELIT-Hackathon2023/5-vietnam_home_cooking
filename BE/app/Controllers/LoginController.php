@@ -10,7 +10,7 @@ use Contributte\ApiRouter\ApiRoute;
 use Nette\Application\Request;
 use Nette\Application\Response;
 use App\Utils\Responses\ExtendedJsonResponse as JsonResponse;
-use Nette\Security\Passwords;
+use Nette\Http\IResponse;
 
 /**
  * API for logging users in
@@ -47,7 +47,7 @@ final class LoginController extends AbstractController
                 return new JsonResponse($this->apiResponseFormatter->formatError("404", "user is not enabled"));
             } else {
                 if ($values->password != $user->getPassword()) {
-                    return new JsonResponse($this->apiResponseFormatter->formatError("404", "bad password"));
+                    return new JsonResponse($this->apiResponseFormatter->formatError("404", "bad password"), IResponse::S401_Unauthorized);
                 } else {
 
                     $this->employeeRepository->setLastLogin($user);
