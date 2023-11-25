@@ -17,6 +17,7 @@ import {
   InputRightElement,
   Stack,
   Text,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import './registerForm.css';
@@ -26,48 +27,33 @@ import axios from 'axios';
 import RegisterImage from '../../assets/register_logo.svg';
 
 const LoginForm = ({ setLogin }) => {
+  const toast = useToast();
+
   const handleSubmit = async (values, actions) => {
-    const body = {
-      name: 'Eduard',
-      surname: 'Ridilla',
-      mobileNumber: '+421917184448',
-      email: 'ridilla.eduard@gmail.com',
-      companyId: 69,
-      plateNumber: 'SW00000',
-    };
+    axios
+      .post('https://telekomparking.website.tuke.sk/api/register', values, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        actions.setSubmitting(false);
 
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Cookie', '_nss=1');
-    myHeaders.append('Access-Control-Allow-Origin', '*');
-    myHeaders.append('Access-Control-Allow-Methods', '*');
-    myHeaders.append('Access-Control-Allow-Headers', '*');
+        toast({
+          title: 'Account created.',
+          description: 'Redirecting to login...',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
 
-    const raw = JSON.stringify({
-      name: 'Eduard',
-      surname: 'Ridilla',
-      mobileNumber: '+421917184448',
-      email: 'ridilla.eduard@gmail.com',
-      companyId: 69,
-      plateNumber: 'SW00000',
-    });
-
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow',
-    };
-
-    fetch('https://telekomparking.website.tuke.sk/api/register', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
-
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   actions.setSubmitting(false);
-    // }, 1000);
+        setTimeout(() => {
+          setLogin(1);
+        }, 3000);
+      });
   };
 
   const handleBackClick = () => {
@@ -116,7 +102,16 @@ const LoginForm = ({ setLogin }) => {
             <Text mb='2.5rem' className='form-heading'>
               Claim Your Spot - Register below
             </Text>
-            <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={{
+                name: '',
+                surname: '',
+                mobileNumber: '',
+                email: '',
+                companyId: '',
+              }}
+              onSubmit={handleSubmit}
+            >
               {(props) => (
                 <Form>
                   <Field name='name'>
@@ -152,7 +147,7 @@ const LoginForm = ({ setLogin }) => {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name='companyEmail'>
+                  <Field name='email'>
                     {({ field, form }) => (
                       <FormControl
                         className='register-input'
@@ -163,24 +158,13 @@ const LoginForm = ({ setLogin }) => {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name='personalId'>
+                  <Field name='companyId'>
                     {({ field, form }) => (
                       <FormControl
                         className='register-input'
                         isInvalid={form.errors.password && form.touched.password}
                       >
                         <Input {...field} placeholder='Personal ID' />
-                        <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                      </FormControl>
-                    )}
-                  </Field>
-                  <Field name='licencePlateNumber'>
-                    {({ field, form }) => (
-                      <FormControl
-                        className='register-input'
-                        isInvalid={form.errors.password && form.touched.password}
-                      >
-                        <Input {...field} placeholder='License plate number' />
                         <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                       </FormControl>
                     )}

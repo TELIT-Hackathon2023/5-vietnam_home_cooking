@@ -1,13 +1,11 @@
 import './App.css';
-import LoginForm from './components/LoginForm/LoginForm.jsx';
 import LandingPage from './pages/LandingPage/LandingPage.jsx';
+import { useState } from 'react';
 
 function App() {
-  return (
-    <>
-      <LandingPage />
-    </>
-  );
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  return <>{loggedIn ? '' : <LandingPage setLoggedIn={setLoggedIn} />}</>;
 }
 
 export default App;

@@ -16,6 +16,7 @@ import {
   Stack,
   VStack,
   ButtonGroup,
+  useToast,
 } from '@chakra-ui/react';
 import './loginForm.css';
 import { Field, Form, Formik } from 'formik';
@@ -23,51 +24,57 @@ import LoginImage from '../../assets/login_logo.svg';
 import { md5 } from 'js-md5';
 import axios from 'axios';
 
-const LoginForm = ({ setLogin }) => {
+const LoginForm = ({ setLogin, setLoggedIn }) => {
+  const toast = useToast();
+
   const handleSubmit = (values, actions) => {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('Cookie', '_nss=1');
-    myHeaders.append('Access-Control-Allow-Origin', 'http://localhost:5173');
-    myHeaders.append('Access-Control-Allow-Methods', '*');
-    myHeaders.append('Access-Control-Allow-Headers', '*');
-
-    const raw = JSON.stringify({
-      email: 'ridilla.eduard@gmail.com',
-      password: 'ff01da0dc1d54f80f25a50bcf16e4d7a',
-    });
-
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow',
+    const payload = {
+      email: values.email,
+      password: md5(values.password),
     };
 
-    fetch('https://telekomparking.website.tuke.sk/api/login', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
+    axios
+      .post('https://telekomparking.website.tuke.sk/api/login', payload, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        actions.setSubmitting(false);
 
-    // const payload = {
-    //   email: values.email,
-    //   password: md5(values.password),
-    // };
+        let toastTitle = 'Logging in...';
+        let toastStatus = 'success';
 
-    // axios
-    //   .post('https://telekomparking.website.tuke.sk/api/login', payload, {
-    //     headers: {
-    //       'Access-Control-Allow-Origin': '*',
-    //       'Access-Control-Allow-Methods': '*',
-    //       'Access-Control-Allow-Headers': '*',
-    //     },
-    //   })
-    //   .then((res) => console.log(res));
+        toast({
+          title: toastTitle,
+          status: toastStatus,
+          duration: 3000,
+          isClosable: false,
+        });
 
-    // setTimeout(() => {
-    //   alert(JSON.stringify(values, null, 2));
-    //   actions.setSubmitting(false);
-    // }, 1000);
+        setTimeout(() => {
+          setLoggedIn(true);
+        }, 3000);
+      })
+      .catch((res) => {
+        console.log(res);
+        actions.setSubmitting(false);
+
+        let toastTitle;
+
+        if (res.response.data.code === '401') toastTitle = 'Incorrect password. Please try again.';
+        if (res.response.data.code === 0) toastTitle = 'Incorrect e-mail. Please try again.';
+
+        toast({
+          title: toastTitle,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   };
 
   const handleForgotPw = () => {
