@@ -11,6 +11,7 @@ use Contributte\ApiRouter\ApiRoute;
 use Nette\Application\Request;
 use Nette\Application\Response;
 use App\Utils\Responses\ExtendedJsonResponse as JsonResponse;
+use Nette\Http\IResponse;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -44,7 +45,7 @@ final class RegisterController extends AbstractController
             $data = $this->getRequestData($request);
             $values = json_decode($data);
             if (!filter_var($values->email, FILTER_VALIDATE_EMAIL)) {
-                return new JsonResponse($this->apiResponseFormatter->formatError("404", "bad email format"));
+                return new JsonResponse($this->apiResponseFormatter->formatError("404", "bad email format"), IResponse::S401_Unauthorized, null);
             } else {
 
                 $customerExist = $this->employeeRepository->countOfEmployees(['email' => $values->email]);

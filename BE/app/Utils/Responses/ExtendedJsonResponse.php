@@ -25,11 +25,14 @@ final class ExtendedJsonResponse implements Nette\Application\Response
     /** @var string */
     private $contentType;
 
+    /** @var string */
+    private $code;
 
-    public function __construct($payload, ?string $contentType = null)
+    public function __construct($payload, $code = Nette\Http\IResponse::S404_NotFound, ?string $contentType = null)
     {
         $this->payload = $payload;
         $this->contentType = $contentType ?: 'application/json';
+        $this->code = $code;
     }
 
 
@@ -60,6 +63,7 @@ final class ExtendedJsonResponse implements Nette\Application\Response
         $httpResponse->setHeader('Access-Control-Allow-Origin', '*');
         $httpResponse->setHeader('Access-Control-Allow-Methods', '*');
         $httpResponse->setHeader('Access-Control-Allow-Headers', '*');
+        $httpResponse->setCode($this->code);
         echo Nette\Utils\Json::encode($this->payload);
     }
 }
