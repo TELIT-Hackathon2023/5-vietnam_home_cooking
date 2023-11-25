@@ -30,6 +30,7 @@ final class ApiResponseFormatter
 	{
 		return [
 			'status' => 'ok',
+            'code' => 200,
 			'payload' => $payload,
 		];
 	}
