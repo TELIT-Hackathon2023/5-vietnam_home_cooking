@@ -1,33 +1,28 @@
-.spot {
-    width: 100%;
-    height: 50px; /* Adjust the height of the parking spot as needed */
-    background-color: #20982a; /* Set the background color */
-    position: relative;
+/* src/ParkingSlot.css */
+.parking-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 400px;
+    margin: 20px auto;
 }
 
-.spot.hovered {
-    background-color: #aaf; /* Set the background color for the hovered state */
+.parking-slot {
+    width: 5rem;
+    height: 2rem;
+    border: 1px solid #000;
+    margin: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.spot.hovered, .spot.hovered.taken {
-    background-color: #aaf; /* Set the background color for the hovered state */
-    cursor: pointer;
-}
-.spot.taken {
-    background-color: #f12d2d;
+.green {
+    background-color: #5BE371;
 }
 
-.parking-spot-info {
-    position: absolute;
-    top: 0;
-    left: 100%; /* Position the info next to the parking spot */
-    background-color: #fff; /* Set the background color for the info box */
-    padding: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    display: none; /* Hide by default */
-    z-index: 3;
+.red {
+    background-color: #E25058;
 }
 
-.spot:hover .parking-spot-info {
-    display: block; /* Display the info box on hover */
-}

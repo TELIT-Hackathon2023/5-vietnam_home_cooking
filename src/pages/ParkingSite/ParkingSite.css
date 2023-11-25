@@ -1,7 +1,6 @@
-.page {
-    height: 100vh;
-}
-
-.content-box {
-    padding: 2rem;
+.content-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
