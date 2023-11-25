@@ -30,7 +30,8 @@
 
     "contributte/api-router": "^4.2.0",
     "nette/mail": "^3.1",
-    "phpmailer/phpmailer": "^6.8"
+    "phpmailer/phpmailer": "^6.8",
+    "contributte/api-docu": "^4.1"
   },
   "require-dev": {
     "ninjify/qa": "^0.13",
