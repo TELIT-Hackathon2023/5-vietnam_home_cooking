@@ -1,4 +1,5 @@
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const telekomEmailRegex = /^[a-zA-Z0-9._%+-]+@telekom\.[a-zA-Z]{2,}$/;
 const phoneNumberRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
 const licensePlateRegexPatterns = {
     US: /^[A-Z0-9]{1,7}$/,
