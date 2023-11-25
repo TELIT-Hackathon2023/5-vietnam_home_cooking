@@ -10,7 +10,7 @@ use App\Security\Authenticator;
 use Contributte\ApiRouter\ApiRoute;
 use Nette\Application\Request;
 use Nette\Application\Response;
-use Nette\Application\Responses\JsonResponse;
+use App\Utils\Responses\ExtendedJsonResponse as JsonResponse;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;

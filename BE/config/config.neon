@@ -5,7 +5,7 @@ extensions:
 
 
 apiDocu:
-	apiDir: "%appDir%/api"
+	apiDir: "%appDir%/../www/apiDocs"
 
 parameters:
 
@@ -32,7 +32,6 @@ services:
 	#
 	- App\Controllers\LoginController
 	- App\Controllers\RegisterController
-	- App\Controllers\PingController
 	SessionRepository:
 	    type: App\Model\Services\EmployeeRepository
 	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\Employee')
