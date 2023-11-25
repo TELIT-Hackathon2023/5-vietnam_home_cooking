@@ -45,13 +45,13 @@ final class RegisterController extends AbstractController
             $data = $this->getRequestData($request);
             $values = json_decode($data);
             if (!filter_var($values->email, FILTER_VALIDATE_EMAIL)) {
-                return new JsonResponse($this->apiResponseFormatter->formatError("404", "bad email format"), IResponse::S401_Unauthorized, null);
+                return new JsonResponse($this->apiResponseFormatter->formatError("401", "bad email format"), IResponse::S401_Unauthorized, null);
             } else {
 
                 $customerExist = $this->employeeRepository->countOfEmployees(['email' => $values->email]);
 
                 if ($customerExist >= 1) {
-                    return new JsonResponse($this->apiResponseFormatter->formatError("404", "already exists"));
+                    return new JsonResponse($this->apiResponseFormatter->formatError("401", "already exists"),IResponse::S401_Unauthorized);
                 } else {
 
                     $password = $this->generateRandomString();
@@ -62,18 +62,17 @@ final class RegisterController extends AbstractController
                         $values->mobileNumber,
                         $values->email,
                         $values->companyId,
-                        $values->plateNumber,
                         md5($password)
                     );
 
                     $this->sendConfirmRegistrationEmail($employee, $password);
                     $this->employeeRepository->setLastLogin($employee);
 
-                    return new JsonResponse($this->apiResponseFormatter->formatMessage("registration Email sent"));
+                    return new JsonResponse($this->apiResponseFormatter->formatMessage("registration Email sent"), IResponse::S200_OK);
                 }
             }
         } catch (\Exception $e) {
-            return new JsonResponse($this->apiResponseFormatter->formatError("500", $e->getMessage()));
+            return new JsonResponse($this->apiResponseFormatter->formatError("500", $e->getMessage()), IResponse::S500_InternalServerError);
         }
 	}
 

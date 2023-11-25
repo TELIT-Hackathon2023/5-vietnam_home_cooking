@@ -28,7 +28,7 @@ final class ExtendedJsonResponse implements Nette\Application\Response
     /** @var string */
     private $code;
 
-    public function __construct($payload, $code = Nette\Http\IResponse::S404_NotFound, ?string $contentType = null)
+    public function __construct($payload, $code = Nette\Http\IResponse::S200_OK, ?string $contentType = null)
     {
         $this->payload = $payload;
         $this->contentType = $contentType ?: 'application/json';

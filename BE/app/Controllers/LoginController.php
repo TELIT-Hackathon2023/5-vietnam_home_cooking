@@ -42,12 +42,12 @@ final class LoginController extends AbstractController
         try {
             $user = $this->employeeRepository->findEmployeeBy(['email' => $values->email]);
             if ($user === null) {
-                return new JsonResponse($this->apiResponseFormatter->formatError("404", "user is null"));
+                return new JsonResponse($this->apiResponseFormatter->formatError("404", "user is null"), IResponse::S404_NotFound);
             } else if ($user->isEnabled() !== true) {
-                return new JsonResponse($this->apiResponseFormatter->formatError("404", "user is not enabled"));
+                return new JsonResponse($this->apiResponseFormatter->formatError("404", "user is not enabled"), IResponse::S404_NotFound);
             } else {
                 if ($values->password != $user->getPassword()) {
-                    return new JsonResponse($this->apiResponseFormatter->formatError("404", "bad password"), IResponse::S401_Unauthorized);
+                    return new JsonResponse($this->apiResponseFormatter->formatError("401", "bad password"), IResponse::S401_Unauthorized);
                 } else {
 
                     $this->employeeRepository->setLastLogin($user);
@@ -59,7 +59,7 @@ final class LoginController extends AbstractController
                         'surname'  => $user->getSurname(),
                         'phone'      => $user->getMobileNumber()
                     ];
-                    return new JsonResponse($this->apiResponseFormatter->formatPayload($userInfo));
+                    return new JsonResponse($this->apiResponseFormatter->formatPayload($userInfo), IResponse::S200_OK);
                 }
             }
         } catch (\Exception $e) {
