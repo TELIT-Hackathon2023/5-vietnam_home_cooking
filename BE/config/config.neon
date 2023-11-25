@@ -1,0 +1,33 @@
+extensions:
+	apiRouter: Contributte\ApiRouter\DI\ApiRouterExtension
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+
+parameters:
+
+
+application:
+	errorPresenter: Error
+	scanDirs: false
+	mapping:
+		*: App\Controllers\*Controller
+
+includes:
+    - nettrine.neon
+
+session:
+	expiration: 14 days
+
+services:
+	- App\Http\ApiResponseFormatter
+	- App\Routing\RouterFactory
+
+	router: @App\Routing\RouterFactory::create
+
+	# Api endpoints
+	#
+	- App\Controllers\LoginController
+	- App\Controllers\RegisterController
+	- App\Controllers\PingController
+	SessionRepository:
+	    type: App\Model\Services\EmployeeRepository
+	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\Employee')
