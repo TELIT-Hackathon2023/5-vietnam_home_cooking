@@ -1,6 +1,6 @@
 parameters:
     doctrine:
-        host: 127.0.0.1:8889
-        user: root
-        password: root
-        dbname: parkingApp
+        host: 127.0.0.1:3306
+        user: appuser
+        password: Vhl1v6_11
+        dbname: mb774sn_parkingapp
