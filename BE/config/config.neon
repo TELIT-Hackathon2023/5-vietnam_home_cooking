@@ -1,6 +1,11 @@
 extensions:
-	apiRouter: Contributte\ApiRouter\DI\ApiRouterExtension
-	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+    apiRouter: Contributte\ApiRouter\DI\ApiRouterExtension
+    console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+    apiDocu: Contributte\ApiDocu\DI\ApiDocuExtension
+
+
+apiDocu:
+	apiDir: "%appDir%/api"
 
 parameters:
 
