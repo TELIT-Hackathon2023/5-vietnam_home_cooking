@@ -13,52 +13,50 @@ import {
 import './loginForm.css';
 import { Field, Form, Formik } from 'formik';
 
-class LoginForm extends Component {
-  render() {
-    const validateName = (value) => {
-      let error;
+const LoginForm = () => {
+  const validateName = (value) => {
+    let error;
 
-      if (!value) {
-        error = 'Name is required';
-      } else if (value.toLowerCase() !== 'naruto') {
-        error = "Jeez! You're not a fan 😱";
-      }
-      return error;
-    };
+    if (!value) {
+      error = 'Name is required';
+    } else if (value.toLowerCase() !== 'naruto') {
+      error = "Jeez! You're not a fan 😱";
+    }
+    return error;
+  };
 
-    return (
-      <Center h='100%'>
-        <Box p='2rem' bg='#E10075' borderRadius='lg'>
-          <Formik
-            initialValues={{ name: 'Sasuke' }}
-            onSubmit={(values, actions) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                actions.setSubmitting(false);
-              }, 1000);
-            }}
-          >
-            {(props) => (
-              <Form>
-                <Field name='name' validate={validateName}>
-                  {({ field, form }) => (
-                    <FormControl isInvalid={form.errors.name && form.touched.name}>
-                      <FormLabel>First name</FormLabel>
-                      <Input {...field} placeholder='name' bg='white' borderColor='#2c2c2c' />
-                      <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Button mt={4} colorScheme='teal' isLoading={props.isSubmitting} type='submit'>
-                  Submit
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </Box>
-      </Center>
-    );
-  }
-}
+  return (
+    <Center h='100%'>
+      <Box p='2rem' bg='#E10075' borderRadius='lg'>
+        <Formik
+          initialValues={{ name: 'Sasuke' }}
+          onSubmit={(values, actions) => {
+            setTimeout(() => {
+              alert(JSON.stringify(values, null, 2));
+              actions.setSubmitting(false);
+            }, 1000);
+          }}
+        >
+          {(props) => (
+            <Form>
+              <Field name='name' validate={validateName}>
+                {({ field, form }) => (
+                  <FormControl isInvalid={form.errors.name && form.touched.name}>
+                    <FormLabel>First name</FormLabel>
+                    <Input {...field} placeholder='name' bg='white' borderColor='#2c2c2c' />
+                    <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <Button mt={4} colorScheme='teal' isLoading={props.isSubmitting} type='submit'>
+                Submit
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </Box>
+    </Center>
+  );
+};
 
 export default LoginForm;
