@@ -1,12 +1,13 @@
-import './App.css'
-import LoginForm from "./components/LoginForm/LoginForm.jsx";
+import './App.css';
+import LoginForm from './components/LoginForm/LoginForm.jsx';
+import ParkingSite from './pages/ParkingSite/ParkingSite.jsx';
 
 function App() {
   return (
     <>
-      <LoginForm />
+      <ParkingSite />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

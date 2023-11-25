@@ -1,0 +1,18 @@
+
+.landing-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+}
+
+
+.items {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 53px;
+    background: linear-gradient(145deg, #cb0068, #f2007c);
+    box-shadow:  34px 34px 68px #ae0059,
+    -34px -34px 68px #ff008f;
+}
