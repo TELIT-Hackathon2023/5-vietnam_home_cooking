@@ -1,7 +1,7 @@
 .login-img-container {
     height: 100%;
     width: 36rem;
-    background-image: url("../../assets/login_image.png");
+    background-image: url("../../assets/register_image.png");
 }
 
 .form-container {

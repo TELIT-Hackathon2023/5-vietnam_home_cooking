@@ -14,10 +14,10 @@ import {
   InputRightElement,
   VStack,
 } from '@chakra-ui/react';
-import './loginForm.css';
+import './registerForm.css';
 import { Field, Form, Formik } from 'formik';
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const handleSubmit = (values, actions) => {
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
@@ -92,4 +92,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
