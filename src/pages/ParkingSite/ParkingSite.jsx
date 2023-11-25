@@ -1,43 +1,31 @@
 import React, { useState } from 'react';
-import Parking from '../../components/Parking/Parking.jsx';
-import { Box, VStack, HStack, IconButton, Text } from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
-import TParking from '../../assets/tparking.svg';
-import { Image } from '@chakra-ui/react';
+import './ParkingSite.css';
+import { Box, Flex, Spacer } from '@chakra-ui/react';
+import NavBar from '../../components/NavBar/NavBar.jsx';
+import Dashboard from '../../components/Dashboard/Dashboard.jsx';
 
 const ParkingSite = () => {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('dashboard');
+
+  const handleNavItemClick = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
-    <Box position='fixed' left='0' top='0' height='100vh' width='8rem' bg='white' color='#2e2e2e'>
-      <VStack
-        spacing='4'
-        alignItems='center'
-        justifyContent='center'
-        paddingTop='8'
-        display={{ base: 'none', md: 'flex' }}
-      >
-        <Image src={TParking} boxSize='100px'></Image>
-        <h1>Map</h1>
-        <h1>Waiting list</h1>
-      </VStack>
+    <div className='content-container'>
+      <Box bg='white' w='70%' h='75%' borderRadius='2rem' overflow='hidden'>
+        <Flex direction='row' height='100%'>
+          {/* Vertical Navbar */}
+          <NavBar onNavItemClick={handleNavItemClick} />
 
-      <Box display={{ base: 'flex', md: 'none' }}>
-        <IconButton
-          icon={<HamburgerIcon />}
-          aria-label='Menu'
-          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-        />
-
-        {isMobileMenuOpen && (
-          <VStack spacing='4' alignItems='flex-start' marginTop='8' justifyContent='center'>
-            <Text>Home</Text>
-            <Text>Profile</Text>
-            <Text>Settings</Text>
-          </VStack>
-        )}
+          {/* Dashboard */}
+          <Box flex='1' p='4'>
+            {currentPage === 'dashboard' && <Dashboard />}
+            {/* Add other pages as needed */}
+          </Box>
+        </Flex>
       </Box>
-    </Box>
+    </div>
   );
 };
 

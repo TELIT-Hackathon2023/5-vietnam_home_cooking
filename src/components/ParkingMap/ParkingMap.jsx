@@ -2,9 +2,9 @@ import React from 'react';
 import ImgMapper from 'react-img-mapper';
 import { Box } from '@chakra-ui/react';
 import ParkingLot from '../../assets/parking.svg';
-import './Parking.css';
+import './ParkingMap.css';
 
-const Parking = () => {
+const ParkingMap = () => {
   const areas = [
     {
       name: 'Area1',
@@ -53,4 +53,4 @@ const Parking = () => {
   );
 };
 
-export default Parking;
+export default ParkingMap;
