@@ -23,6 +23,7 @@ import { Field, Form, Formik } from 'formik';
 import LoginImage from '../../assets/login_logo.svg';
 import { md5 } from 'js-md5';
 import axios from 'axios';
+import { telekomEmailRegex } from '../../assets/regex.js';
 
 const LoginForm = ({ setLogin, setLoggedIn }) => {
   const toast = useToast();
@@ -42,7 +43,6 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
         },
       })
       .then((res) => {
-        console.log(res);
         actions.setSubmitting(false);
 
         let toastTitle = 'Logging in...';
@@ -60,7 +60,6 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
         }, 3000);
       })
       .catch((res) => {
-        console.log(res);
         actions.setSubmitting(false);
 
         let toastTitle;
@@ -104,6 +103,16 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
     };
   }, []);
 
+  const validateEmail = (email) => {
+    const found = email.match(telekomEmailRegex);
+
+    console.log(found);
+
+    if (!found) {
+      return 'Invalid email';
+    }
+  };
+
   return (
     <>
       <Container
@@ -134,15 +143,15 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
             <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>
               {(props) => (
                 <Form>
-                  <Field name='email'>
+                  <Field name='email' validate={validateEmail}>
                     {({ field, form }) => (
                       <FormControl
-                        isInvalid={form.errors.name && form.touched.name}
+                        isInvalid={form.errors.email && form.touched.email}
                         className='email-input'
                       >
                         <FormLabel className='form-label'>Personal ID / E-mail Address</FormLabel>
                         <Input {...field} type='email' />
-                        <FormErrorMessage>{form.errors.name}</FormErrorMessage>
+                        <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
                     )}
                   </Field>
@@ -186,6 +195,7 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
                       mt={4}
                       color='white'
                       bg='#E10075'
+                      _hover={{ bgColor: '#C5006A' }}
                       type='submit'
                       isLoading={props.isSubmitting}
                       w={stackDirection === 'column' ? '50%' : ''}

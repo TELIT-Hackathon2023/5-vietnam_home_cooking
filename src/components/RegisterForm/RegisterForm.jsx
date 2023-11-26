@@ -25,6 +25,7 @@ import { Field, Form, Formik } from 'formik';
 import { CloseIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import RegisterImage from '../../assets/register_logo.svg';
+import { telekomEmailRegex } from '../../assets/regex.js';
 
 const LoginForm = ({ setLogin }) => {
   const toast = useToast();
@@ -78,6 +79,16 @@ const LoginForm = ({ setLogin }) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  const validateEmail = (email) => {
+    const found = email.match(telekomEmailRegex);
+
+    console.log(found);
+
+    if (!found) {
+      return 'Invalid email';
+    }
+  };
 
   return (
     <>
@@ -147,7 +158,7 @@ const LoginForm = ({ setLogin }) => {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name='email'>
+                  <Field name='email' validate={validateEmail}>
                     {({ field, form }) => (
                       <FormControl
                         className='register-input'
@@ -188,6 +199,7 @@ const LoginForm = ({ setLogin }) => {
                       mt={4}
                       color='white'
                       bg='#E10075'
+                      _hover={{ bgColor: '#C5006A' }}
                       type='submit'
                       isLoading={props.isSubmitting}
                       w={stackDirection === 'column' ? '50%' : ''}
