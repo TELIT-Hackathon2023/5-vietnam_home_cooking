@@ -151,7 +151,7 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
             <p className='form-heading'>Sign in to Parking</p>
             <p className='form-subtext'>Please enter your detail below to sign in</p>
             <Formik
-              initialValues={{ email: 'ridilla.eduard@gmail.com', password: '6rlsYCezu1' }}
+              initialValues={{ email: 'alexkoveres@gmail.com', password: 'AG1whUGKfu' }}
               onSubmit={handleSubmit}
             >
               {(props) => (
