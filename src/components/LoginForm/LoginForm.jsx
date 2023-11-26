@@ -44,10 +44,15 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
           'Access-Control-Allow-Headers': '*',
         },
       })
-      .then((res) => {
+      .then(async (res) => {
         actions.setSubmitting(false);
 
-        setUserData(res.data.payload);
+        const vehicles = await axios
+          .get('https://telekomparking.website.tuke.sk/api/employee-cars/' + res.data.payload.id)
+          .then((res) => res.data.payload);
+
+        setUserData({ ...res.data.payload, vehicles });
+        console.log({ ...res.data.payload, vehicles });
 
         let toastTitle = 'Welcome ' + res.data.payload.first_name;
         let toastStatus = 'success';
@@ -145,7 +150,10 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
           <Stack direction='column' className='form-stack'>
             <p className='form-heading'>Sign in to Parking</p>
             <p className='form-subtext'>Please enter your detail below to sign in</p>
-            <Formik initialValues={{ email: '', password: '' }} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={{ email: 'ridilla.eduard@gmail.com', password: '6rlsYCezu1' }}
+              onSubmit={handleSubmit}
+            >
               {(props) => (
                 <Form>
                   <Field name='email' validate={validateEmail}>

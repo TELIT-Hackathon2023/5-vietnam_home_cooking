@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import './Dashboard.css';
 import ParkingLot from '../ParkingLot/ParkingLot.jsx';
+import YourVehicles from '../YourVehicles/YourVehicles.jsx';
 
 const Dashboard = () => {
   return (
@@ -126,40 +127,8 @@ const Dashboard = () => {
               </Text>
             </Box>
           </Stack>
-
-          {/* Divider */}
           <Box borderColor='gray.200' marginY='1rem' />
-
-          {/* Table under the first small box */}
-          <Table variant='simple' colorScheme='whiteAlpha'>
-            <Tbody>
-              {/* Add your table rows here */}
-              <Tr>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
-                  Škoda Octavia
-                </Td>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
-                  KE123AS
-                </Td>
-              </Tr>
-              <Tr>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
-                  Škoda Octavia
-                </Td>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
-                  KE123AS
-                </Td>
-              </Tr>
-              <Tr>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
-                  Škoda Octavia
-                </Td>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
-                  KE123AS
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
+          <YourVehicles />
         </Box>
         {/* Second box on the right */}
         <Box
