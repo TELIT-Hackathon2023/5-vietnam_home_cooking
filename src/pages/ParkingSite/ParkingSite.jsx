@@ -4,6 +4,7 @@ import { Box, Button, Flex, Spacer, useToast } from '@chakra-ui/react';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import Dashboard from '../../components/Dashboard/Dashboard.jsx';
 import Booking from '../../components/Booking/Booking.jsx';
+import ParkingMap from '../../components/ParkingMap/ParkingMap.jsx';
 
 const ParkingSite = ({ setLoggedIn }) => {
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -27,7 +28,7 @@ const ParkingSite = ({ setLoggedIn }) => {
           <Box flex='1' p='4'>
             {currentPage === 'dashboard' && <Dashboard />}
             {currentPage === 'booking' && <Booking />}
-            {/* Add other pages as needed */}
+            {currentPage === 'map' && <ParkingMap />}
           </Box>
         </Flex>
       </Box>
