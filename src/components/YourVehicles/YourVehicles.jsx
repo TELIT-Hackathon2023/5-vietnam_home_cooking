@@ -11,7 +11,6 @@ const YourVehicles = () => {
         <Tbody>
           {userData.vehicles.map((vehicle) => {
             const imgPath = '/src/assets/brands/' + vehicle.carBrand + '.png';
-            console.log(imgPath);
 
             return (
               <Tr>
