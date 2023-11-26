@@ -1,13 +1,22 @@
-import React from 'react';
-import { Box, Container } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Box, Container, HStack, Image } from '@chakra-ui/react';
 import './LandingPage.css';
+import LoginForm from '../../components/LoginForm/LoginForm.jsx';
+import RegisterForm from '../../components/RegisterForm/RegisterForm.jsx';
 
-const LandingPage = () => {
+const LandingPage = ({ setLoggedIn }) => {
+  const [login, setLogin] = useState(1);
+
   return (
-    <Box bg='grey' w='74rem' h='46.875rem' className='content-container'>
-      <Box />
-      <Box />
-    </Box>
+    <div className='content-container'>
+      <Box className='content-box'>
+        {login ? (
+          <LoginForm setLogin={setLogin} setLoggedIn={setLoggedIn} />
+        ) : (
+          <RegisterForm setLogin={setLogin} />
+        )}
+      </Box>
+    </div>
   );
 };
 

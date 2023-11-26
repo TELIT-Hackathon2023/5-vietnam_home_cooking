@@ -1,0 +1,28 @@
+/* src/ParkingSlot.css */
+.parking-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+.parking-slot {
+    width: 5rem;
+    height: 2rem;
+    border: 1px solid #000;
+    margin: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.green {
+    background-color: #5BE371;
+}
+
+.red {
+    background-color: #E25058;
+}
+
