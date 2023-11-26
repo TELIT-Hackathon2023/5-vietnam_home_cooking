@@ -3,6 +3,7 @@ import './ParkingSite.css';
 import { Box, Flex, Spacer } from '@chakra-ui/react';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import Dashboard from '../../components/Dashboard/Dashboard.jsx';
+import ParkingMap from '../../components/ParkingMap/ParkingMap.jsx';
 
 const ParkingSite = () => {
   const [currentPage, setCurrentPage] = useState('dashboard');
@@ -21,6 +22,7 @@ const ParkingSite = () => {
           {/* Dashboard */}
           <Box flex='1' p='4'>
             {currentPage === 'dashboard' && <Dashboard />}
+            {currentPage === 'map' && <ParkingMap />}
             {/* Add other pages as needed */}
           </Box>
         </Flex>
