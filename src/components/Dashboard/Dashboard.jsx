@@ -96,7 +96,7 @@ const Dashboard = () => {
           <Heading size='md' fontWeight={500}>
             Telecom parking slots
           </Heading>
-          <ParkingLot></ParkingLot>
+          <ParkingLot showFree={true} />
         </Box>
       </Flex>
 

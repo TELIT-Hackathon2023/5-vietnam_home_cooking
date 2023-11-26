@@ -24,8 +24,10 @@ import LoginImage from '../../assets/login_logo.svg';
 import { md5 } from 'js-md5';
 import axios from 'axios';
 import { telekomEmailRegex } from '../../assets/regex.js';
+import { useUserContext } from '../../hooks/UserContext.jsx';
 
 const LoginForm = ({ setLogin, setLoggedIn }) => {
+  const { userData, setUserData } = useUserContext();
   const toast = useToast();
 
   const handleSubmit = (values, actions) => {
@@ -45,11 +47,14 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
       .then((res) => {
         actions.setSubmitting(false);
 
-        let toastTitle = 'Logging in...';
+        setUserData(res.data.payload);
+
+        let toastTitle = 'Welcome ' + res.data.payload.first_name;
         let toastStatus = 'success';
 
         toast({
           title: toastTitle,
+          description: 'Logging in...',
           status: toastStatus,
           duration: 3000,
           isClosable: false,
@@ -104,13 +109,13 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
   }, []);
 
   const validateEmail = (email) => {
-    const found = email.match(telekomEmailRegex);
-
-    console.log(found);
-
-    if (!found) {
-      return 'Invalid email';
-    }
+    // const found = email.match(telekomEmailRegex);
+    //
+    // console.log(found);
+    //
+    // if (!found) {
+    //   return 'Invalid email';
+    // }
   };
 
   return (

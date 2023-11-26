@@ -1,0 +1,17 @@
+.park-area {
+    margin: 0 !important;
+}
+
+.parking-lot-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.parking-spot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

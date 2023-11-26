@@ -158,7 +158,7 @@ const LoginForm = ({ setLogin }) => {
                       </FormControl>
                     )}
                   </Field>
-                  <Field name='email' validate={validateEmail}>
+                  <Field name='email'>
                     {({ field, form }) => (
                       <FormControl
                         className='register-input'
@@ -175,7 +175,7 @@ const LoginForm = ({ setLogin }) => {
                         className='register-input'
                         isInvalid={form.errors.password && form.touched.password}
                       >
-                        <Input {...field} placeholder='Personal ID' />
+                        <Input {...field} placeholder='Personal ID' type='number' />
                         <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                       </FormControl>
                     )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Container, Grid, GridItem, Stack, Text } from '@chakra-ui/react';
 import MyBookings from './MyBookings.jsx';
-import MiniMap from './MiniMap.jsx';
+import ParkingLot from '../ParkingLot/ParkingLot.jsx';
 
 const Booking = () => {
   return (
@@ -12,7 +12,7 @@ const Booking = () => {
       <Grid h='100%' p='4' templateRows='repeat(2, 1fr)' templateColumns='repeat(4, 1fr)' gap={4}>
         <GridItem colSpan={2} />
         <GridItem colSpan={2}>
-          <MiniMap />
+          <ParkingLot showFree={false} />
         </GridItem>
         <GridItem colSpan={3} borderColor='#ACACAC' borderWidth='1px' borderRadius='0.5rem'>
           <MyBookings />

@@ -20,10 +20,12 @@ import TParking from '../../assets/tparking.svg';
 import './NavBar.css';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import { CiLogout } from 'react-icons/ci';
+import { useUserContext } from '../../hooks/UserContext.jsx';
 
 const NavBar = ({ onNavItemClick, onLogOut }) => {
   const [selectedItem, setSelectedItem] = useState('dashboard');
   const toast = useToast();
+  const { userData, setUserData } = useUserContext();
 
   const handleItemClick = (item) => {
     setSelectedItem(item);
@@ -103,9 +105,13 @@ const NavBar = ({ onNavItemClick, onLogOut }) => {
             <Divider borderColor='gray.300' my={4} gap='0' mb='0' />
             <Flex alignItems='center' justifyContent='space-between' p='1rem' pt='0'>
               <Flex alignItems='center'>
-                <Avatar size='sm' name='John Doe' src='user_avatar_url.jpg' />
+                <Avatar
+                  size='sm'
+                  name={userData.first_name + ' ' + userData.surname}
+                  src='user_avatar_url.jpg'
+                />
                 <Text marginLeft={2} color={'#2C2C2C'} fontSize='0.75rem'>
-                  John Doe
+                  {userData.first_name + ' ' + userData.surname}
                 </Text>
               </Flex>
               <Menu color='#2c2c2c'>
