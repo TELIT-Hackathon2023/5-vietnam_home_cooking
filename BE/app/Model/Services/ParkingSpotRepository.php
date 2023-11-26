@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\TransactionRequiredException;
 
 class ParkingSpotRepository extends EntityRepository {
 
@@ -52,7 +53,7 @@ class ParkingSpotRepository extends EntityRepository {
      * @param array|null $orderBy
      * @return ParkingSpot
      */
-    public function findOneBy(array $criteria = array(), array|null $orderBy = array()): ParkingSpot
+    public function findOneSpotBy(array $criteria = array(), array|null $orderBy = array()): ParkingSpot
     {
         return $this->findOneBy($criteria, $orderBy);
     }
@@ -91,6 +92,25 @@ class ParkingSpotRepository extends EntityRepository {
         $parkingSpot = new ParkingSpot;
         $parkingSpot->setNumber($number);
         $parkingSpot->setFree($free);
+
+        $this->em->persist($parkingSpot);
+        $this->em->flush();
+
+        return $parkingSpot;
+    }
+
+    /**
+     * @param $id
+     * @return ParkingSpot
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws TransactionRequiredException
+     */
+    public function makeUnavailable($id): ParkingSpot
+    {
+        $parkingSpot = $this->getById($id);
+        $parkingSpot->setFree(false);
 
         $this->em->persist($parkingSpot);
         $this->em->flush();

@@ -17,15 +17,15 @@ use Nette\Http\IResponse;
  * API for logging users in
  *
  * @ApiRoute(
- * 	"/api/register-car",
+ * 	"/api/delete-car",
  * 	methods={
  * 		"POST"="run"
  * 	},
- *  presenter="RegisterEmployeeCar",
+ *  presenter="DeleteEmployeeCar",
  *  format="json"
  * )
  */
-final class RegisterEmployeeCarController extends AbstractController
+final class DeleteEmployeeCarController extends AbstractController
 {
     /** @var EmployeeRepository @inject */
     public EmployeeRepository $employeeRepository;
@@ -48,13 +48,14 @@ final class RegisterEmployeeCarController extends AbstractController
 
                 $alreadyExists = $this->employeeCarRepository->countCarsByPlate(['employee' => $user, 'carPlateNumber' => $values->plateNumber]);
 
-                if ($alreadyExists >= 1) {
-                    return new JsonResponse($this->apiResponseFormatter->formatError("403", "this plate is already registered"), IResponse::S403_Forbidden);
+                if ($alreadyExists == 0) {
+                    return new JsonResponse($this->apiResponseFormatter->formatError("403", "this car is not assigned to selected user"), IResponse::S403_Forbidden);
                 } else {
 
-                    $this->employeeCarRepository->create($user, $values->plateNumber, null);
+                    $car = $this->employeeCarRepository->findOneCarBy(['employee' => $user, 'carPlateNumber' => $values->plateNumber]);
+                    $this->employeeCarRepository->deleteCar($car->getId());
 
-                    return new JsonResponse($this->apiResponseFormatter->formatMessage("registered successfully and scraped brand "), IResponse::S200_OK);
+                    return new JsonResponse($this->apiResponseFormatter->formatMessage("successfully deleted "), IResponse::S200_OK);
                 }
             }
         } catch (\Exception $e) {
