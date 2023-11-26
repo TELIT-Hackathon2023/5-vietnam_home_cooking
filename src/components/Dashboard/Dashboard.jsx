@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -23,49 +23,53 @@ import {
   Modal,
   ModalOverlay,
   ModalFooter,
-  FormControl, FormLabel, Input, FormHelperText, useToast,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  useToast,
 } from '@chakra-ui/react';
 import './Dashboard.css';
 import ParkingLot from '../ParkingLot/ParkingLot.jsx';
 import YourVehicles from '../YourVehicles/YourVehicles.jsx';
-import axios from "axios";
-import {useUserContext} from "../../hooks/UserContext.jsx";
+import axios from 'axios';
+import { useUserContext } from '../../hooks/UserContext.jsx';
 
 const Dashboard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [ vehicleRegistration, setVehicleRegistration] = useState("");
-  const { setUserData ,userData } = useUserContext();
+  const [vehicleRegistration, setVehicleRegistration] = useState('');
+  const { setUserData, userData } = useUserContext();
   const toast = useToast();
   const vehicles = async () => {
     await axios
-        .get('https://telekomparking.website.tuke.sk/api/employee-cars/' + userData.id)
-        .then((res) => setUserData({...userData, vehicles: res.data.payload}));
-  }
+      .get('https://telekomparking.website.tuke.sk/api/employee-cars/' + userData.id)
+      .then((res) => setUserData({ ...userData, vehicles: res.data.payload }));
+  };
 
   const onSubmit = function () {
     axios
-        .post('https://telekomparking.website.tuke.sk/api/register-car', {"userId": userData.id, "plateNumber": vehicleRegistration }, {
+      .post(
+        'https://telekomparking.website.tuke.sk/api/register-car',
+        { userId: userData.id, plateNumber: vehicleRegistration },
+        {
           headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': '*',
             'Access-Control-Allow-Headers': '*',
           },
-        })
-        .then( () => {
-      toast({
-        title: `Vehicle ${vehicleRegistration} registered`,
-        status: "info",
-        duration: 9000,
-        isClosable: true,
+        },
+      )
+      .then(() => {
+        toast({
+          title: `Vehicle ${vehicleRegistration} registered`,
+          status: 'info',
+          duration: 9000,
+          isClosable: true,
+        });
+        onClose();
+        vehicles();
       });
-          onClose();
-          vehicles();
-
-
-
-        })
-
-  }
+  };
 
   return (
     <Flex direction={['column', 'column', 'row']} height='100%'>
@@ -168,12 +172,7 @@ const Dashboard = () => {
             </Heading>
             <Spacer />
             <Box>
-              <Text
-                  fontWeight={600}
-                  color={'#E10075'}
-                  cursor={'pointer'}
-                  onClick={onOpen}
-              >
+              <Text fontWeight={600} color={'#E10075'} cursor={'pointer'} onClick={onOpen}>
                 Add
               </Text>
             </Box>
@@ -217,7 +216,7 @@ const Dashboard = () => {
         </Box>
       </Flex>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="md">
+      <Modal isOpen={isOpen} onClose={onClose} size='md'>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add vehicle</ModalHeader>
@@ -225,16 +224,19 @@ const Dashboard = () => {
           <ModalBody>
             <FormControl>
               <FormLabel>Licence plate number</FormLabel>
-              <Input type="text" onChange={(event) => {
-                setVehicleRegistration(event.target.value);
-              }} />
+              <Input
+                type='text'
+                onChange={(event) => {
+                  setVehicleRegistration(event.target.value);
+                }}
+              />
             </FormControl>
           </ModalBody>
-          <ModalFooter >
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button colorScheme="pink" onClick={onSubmit}>
+            <Button colorScheme='pink' onClick={onSubmit}>
               Add
             </Button>
           </ModalFooter>
