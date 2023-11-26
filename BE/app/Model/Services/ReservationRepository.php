@@ -55,7 +55,7 @@ class ReservationRepository extends EntityRepository {
      * @param array|null $orderBy
      * @return Reservation
      */
-    public function findOneBy(array $criteria = array(), array|null $orderBy = array()): Reservation
+    public function findOneReservationBy(array $criteria = array(), array|null $orderBy = array()): Reservation
     {
         return $this->findOneBy($criteria, $orderBy);
     }
