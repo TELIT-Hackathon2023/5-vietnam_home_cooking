@@ -8,9 +8,11 @@ import ParkingMap from '../../components/ParkingMap/ParkingMap.jsx';
 
 const ParkingSite = ({ setLoggedIn }) => {
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [selectedItem, setSelectedItem] = useState('dashboard');
 
   const handleNavItemClick = (page) => {
     setCurrentPage(page);
+    setSelectedItem(page);
   };
 
   const onLogOut = () => {
@@ -28,7 +30,7 @@ const ParkingSite = ({ setLoggedIn }) => {
           <Box flex='1' p='4'>
             {currentPage === 'dashboard' && <Dashboard />}
             {currentPage === 'booking' && <Booking />}
-            {currentPage === 'map' && <ParkingMap />}
+            {currentPage === 'map' && <ParkingMap setCurrentPage = {setCurrentPage} />}
           </Box>
         </Flex>
       </Box>

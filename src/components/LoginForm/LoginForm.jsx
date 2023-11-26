@@ -39,9 +39,9 @@ const LoginForm = ({ setLogin, setLoggedIn }) => {
     axios
       .post('https://telekomparking.website.tuke.sk/api/login', payload, {
         headers: {
-          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Origin': 'http://localhost:5173',
           'Access-Control-Allow-Methods': '*',
-          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
       })
       .then(async (res) => {
