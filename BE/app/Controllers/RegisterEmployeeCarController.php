@@ -52,9 +52,19 @@ final class RegisterEmployeeCarController extends AbstractController
                     return new JsonResponse($this->apiResponseFormatter->formatError("403", "this plate is already registered"), IResponse::S403_Forbidden);
                 } else {
 
-                    $this->employeeCarRepository->create($user, $values->plateNumber, null);
+                    $car = $this->employeeCarRepository->create($user, $values->plateNumber, null);
 
-                    return new JsonResponse($this->apiResponseFormatter->formatMessage('vehicle successfully registered'), IResponse::S200_OK);
+                    $plateVar = "[" . '"' .  $car->getCarPlateNumber() . '"' . "]";
+                    $file = '../data.json';
+                    file_put_contents($file, $plateVar);
+                    $pythonScript = '../scrap.py';
+                    shell_exec("python3 $pythonScript '$file'");
+                    $jsonContent = file_get_contents($file);
+                    $data = json_decode($jsonContent, true);
+                    $this->employeeCarRepository->updateBrand($car->getId(), $data[$car->getCarPlateNumber()]);
+                    unlink($file);
+
+                    return new JsonResponse($this->apiResponseFormatter->formatMessage("registered successfully and scraped brand "), IResponse::S200_OK);
                 }
             }
         } catch (\Exception $e) {

@@ -53,7 +53,7 @@ class EmployeeCarRepository extends EntityRepository {
      * @param array|null $orderBy
      * @return EmployeeCar
      */
-    public function findOneBy(array $criteria = array(), array|null $orderBy = array()): EmployeeCar
+    public function findOneCarBy(array $criteria = array(), array|null $orderBy = array())
     {
         return $this->findOneBy($criteria, $orderBy);
     }
@@ -93,6 +93,24 @@ class EmployeeCarRepository extends EntityRepository {
         $employeeCar = new EmployeeCar;
         $employeeCar->setEmployee($employee);
         $employeeCar->setCarPlateNumber($carPlateNumber);
+        $employeeCar->setCarBrand($carBrand);
+
+        $this->em->persist($employeeCar);
+        $this->em->flush();
+
+        return $employeeCar;
+    }
+
+    /**
+     * @param int $id
+     * @param string $carBrand
+     * @return EmployeeCar
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function updateBrand(int $id, string $carBrand): EmployeeCar
+    {
+        $employeeCar = $this->find($id);
         $employeeCar->setCarBrand($carBrand);
 
         $this->em->persist($employeeCar);
