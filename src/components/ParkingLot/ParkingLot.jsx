@@ -20,29 +20,14 @@ import {
 import './ParkingLot.css';
 import axios from 'axios';
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import { useUserContext } from '../../hooks/UserContext.jsx';
+import OccupiedPopoverBody from './OccupiedPopoverBody.jsx';
 
 const ParkingLot = ({ showFree }) => {
-  const initialParkingData = [
-    { number: 1, status: 'vacant' },
-    { number: 2, status: 'vacant' },
-    { number: 3, status: 'reserved' },
-    { number: 4, status: 'vacant' },
-    { number: 5, status: 'vacant' },
-    { number: 6, status: 'occupied' },
-    { number: 7, status: 'reserved' },
-    { number: 8, status: 'vacant' },
-    { number: 9, status: 'occupied' },
-    { number: 10, status: 'reserved' },
-    { number: 11, status: 'vacant' },
-    { number: 12, status: 'reserved' },
-    { number: 13, status: 'vacant' },
-    { number: 14, status: 'occupied' },
-    { number: 15, status: 'vacant' },
-  ];
-
   const [vacantSpots, setVacantSpots] = useState(0);
   const [parkingData, setParkingData] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const { userData } = useUserContext();
 
   useEffect(() => {
     axios.get('https://telekomparking.website.tuke.sk/api/all-spots').then((res) => {
@@ -82,6 +67,20 @@ const ParkingLot = ({ showFree }) => {
   const handleCreateBooking = () => {
     // Add logic to handle the creation of a booking
     console.log('Creating booking...');
+  };
+
+  const handleBookSpot = (spotNumber) => {
+    const body = {
+      userId: userData.id,
+      plateNumber: 'SW00000',
+      spotNumber: spotNumber,
+      from: '2023-11-26 12:00:00',
+      to: '2023-11-26 13:00:00',
+    };
+
+    axios
+      .post('https://telekomparking.website.tuke.sk/api/make-reservation', body)
+      .then((res) => console.log(res));
   };
 
   return (
@@ -146,11 +145,12 @@ const ParkingLot = ({ showFree }) => {
                             bg='#E10075'
                             color='white'
                             _hover={{ bgColor: '#C5006A' }}
+                            onClick={() => handleBookSpot(spot.spotNumber)}
                           >
                             Book this spot
                           </Button>
                         ) : (
-                          'occupied'
+                          <OccupiedPopoverBody spotNumber={spot.spotNumber} />
                         )}
                       </PopoverBody>
                     </PopoverContent>
@@ -215,6 +215,7 @@ const ParkingLot = ({ showFree }) => {
                             bg='#E10075'
                             color='white'
                             _hover={{ bgColor: '#C5006A' }}
+                            onClick={() => handleBookSpot(spot.spotNumber)}
                           >
                             Book this spot
                           </Button>
@@ -284,6 +285,7 @@ const ParkingLot = ({ showFree }) => {
                             bg='#E10075'
                             color='white'
                             _hover={{ bgColor: '#C5006A' }}
+                            onClick={() => handleBookSpot(spot.spotNumber)}
                           >
                             Book this spot
                           </Button>
