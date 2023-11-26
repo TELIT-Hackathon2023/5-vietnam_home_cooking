@@ -40,7 +40,6 @@ const LoginForm = ({ setLogin }) => {
         },
       })
       .then((res) => {
-        console.log(res);
         actions.setSubmitting(false);
 
         toast({
@@ -54,6 +53,16 @@ const LoginForm = ({ setLogin }) => {
         setTimeout(() => {
           setLogin(1);
         }, 3000);
+      })
+      .catch((res) => {
+        console.log(res);
+        toast({
+          title: 'An error occured.',
+          description: 'Please try again later',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       });
   };
 
