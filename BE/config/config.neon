@@ -38,6 +38,7 @@ services:
 	- App\Controllers\GetAllSpotsController
 	- App\Controllers\MakeReservationController
 	- App\Controllers\DeleteEmployeeCarController
+	- App\Controllers\GetReservationBySpotNumberController
 
 	SessionRepository:
 	    type: App\Model\Services\EmployeeRepository
