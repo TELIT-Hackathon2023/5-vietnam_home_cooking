@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ParkingSite from './pages/ParkingSite/ParkingSite.jsx';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   return (
     <>

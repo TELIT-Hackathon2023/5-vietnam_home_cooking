@@ -16,7 +16,7 @@ const MiniMap = () => {
         </Box>
       </GridItem>
       <GridItem colSpan={2} borderColor='#ACACAC' borderWidth='1px' p='0.5rem'>
-        <Box as='button' h='2.375rem' fontSize='1rem'>
+        <Box as='button' h='2.375rem' fontSize='1rem' bg='grey' borderRadius=''>
           Car
         </Box>
       </GridItem>
