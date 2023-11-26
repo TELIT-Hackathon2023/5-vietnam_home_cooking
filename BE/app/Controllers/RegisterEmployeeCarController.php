@@ -4,66 +4,62 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Model\Services\EmployeeCarRepository;
 use App\Model\Services\EmployeeRepository;
-use App\Security\Authenticator;
 use Contributte\ApiRouter\ApiRoute;
 use Nette\Application\Request;
 use Nette\Application\Response;
 use App\Utils\Responses\ExtendedJsonResponse as JsonResponse;
 use Nette\Http\IResponse;
 
+
 /**
  * API for logging users in
  *
  * @ApiRoute(
- * 	"/api/login",
+ * 	"/api/register-car",
  * 	methods={
  * 		"POST"="run"
  * 	},
- *  presenter="Login",
+ *  presenter="RegisterEmployeeCar",
  *  format="json"
  * )
  */
-final class LoginController extends AbstractController
+final class RegisterEmployeeCarController extends AbstractController
 {
     /** @var EmployeeRepository @inject */
     public EmployeeRepository $employeeRepository;
 
-    /** @var Authenticator */
-    private Authenticator $authenticator;
-
+    /** @var EmployeeCarRepository @inject */
+    public EmployeeCarRepository $employeeCarRepository;
 
 	public function run(Request $request): Response
 	{
-        $this->authenticator = new Authenticator($this->employeeRepository);
         $data = $this->getRequestData();
         $values = json_decode($data);
 
         try {
-            $user = $this->employeeRepository->findEmployeeBy(['email' => $values->email]);
+            $user = $this->employeeRepository->getById($values->userId);
             if ($user === null) {
                 return new JsonResponse($this->apiResponseFormatter->formatError("404", "user is null"), IResponse::S404_NotFound);
             } else if ($user->isEnabled() !== true) {
                 return new JsonResponse($this->apiResponseFormatter->formatError("404", "user is not enabled"), IResponse::S404_NotFound);
             } else {
-                if ($values->password != $user->getPassword()) {
-                    return new JsonResponse($this->apiResponseFormatter->formatError("401", "bad password"), IResponse::S401_Unauthorized);
+
+                $alreadyExists = $this->employeeCarRepository->countCarsByPlate(['employee' => $user, 'carPlateNumber' => $values->plateNumber]);
+
+                if ($alreadyExists >= 1) {
+                    return new JsonResponse($this->apiResponseFormatter->formatError("403", "this plate is already registered"), IResponse::S403_Forbidden);
                 } else {
 
-                    $this->employeeRepository->setLastLogin($user);
+                    $this->employeeCarRepository->create($user, $values->plateNumber, null);
 
-                    $userInfo = [
-                        'id'         => $user->getId(),
-                        'email'   => $user->getEmail(),
-                        'first_name' => $user->getName(),
-                        'surname'  => $user->getSurname(),
-                        'phone'      => $user->getMobileNumber()
-                    ];
-                    return new JsonResponse($this->apiResponseFormatter->formatPayload($userInfo), IResponse::S200_OK);
+                    return new JsonResponse($this->apiResponseFormatter->formatMessage('vehicle successfully registered'), IResponse::S200_OK);
                 }
             }
         } catch (\Exception $e) {
             return new JsonResponse($this->apiResponseFormatter->formatError($e->getCode(), $e->getMessage()), IResponse::S500_InternalServerError);
         }
+
 	}
 }

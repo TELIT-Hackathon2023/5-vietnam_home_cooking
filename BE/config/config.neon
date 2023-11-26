@@ -32,6 +32,14 @@ services:
 	#
 	- App\Controllers\LoginController
 	- App\Controllers\RegisterController
+	- App\Controllers\RegisterEmployeeCarController
+	- App\Controllers\GetEmployeeCarsController
 	SessionRepository:
 	    type: App\Model\Services\EmployeeRepository
 	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\Employee')
+	EmployeeCarRepository:
+	    type: App\Model\Services\EmployeeCarRepository
+	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\EmployeeCar')
+	ParkingSpotRepository:
+	    type: App\Model\Services\ParkingSpotRepository
+	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\ParkingSpot')
