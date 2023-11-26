@@ -16,41 +16,42 @@ import {
   Popover,
   VStack,
   HStack,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  Input,
+  ModalFooter,
+  Modal,
+  useDisclosure,
 } from '@chakra-ui/react';
 import './ParkingLot.css';
 import axios from 'axios';
 import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
+import { useUserContext } from '../../hooks/UserContext.jsx';
+import OccupiedPopoverBody from './OccupiedPopoverBody.jsx';
+import BookSpotButton from './BookSpotButton.jsx';
 
 const ParkingLot = ({ showFree }) => {
-  const initialParkingData = [
-    { number: 1, status: 'vacant' },
-    { number: 2, status: 'vacant' },
-    { number: 3, status: 'reserved' },
-    { number: 4, status: 'vacant' },
-    { number: 5, status: 'vacant' },
-    { number: 6, status: 'occupied' },
-    { number: 7, status: 'reserved' },
-    { number: 8, status: 'vacant' },
-    { number: 9, status: 'occupied' },
-    { number: 10, status: 'reserved' },
-    { number: 11, status: 'vacant' },
-    { number: 12, status: 'reserved' },
-    { number: 13, status: 'vacant' },
-    { number: 14, status: 'occupied' },
-    { number: 15, status: 'vacant' },
-  ];
-
   const [vacantSpots, setVacantSpots] = useState(0);
   const [parkingData, setParkingData] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const { userData } = useUserContext();
 
-  useEffect(() => {
+  const refreshData = () => {
     axios.get('https://telekomparking.website.tuke.sk/api/all-spots').then((res) => {
       setIsLoadingData(false);
       setParkingData(res.data.payload);
       console.log(res.data.payload);
       setVacantSpots(res.data.payload.filter((spot) => spot.availability).length);
     });
+  };
+
+  useEffect(() => {
+    refreshData();
   }, []);
 
   let leftParkingSpots = parkingData.slice(0, 5);
@@ -60,24 +61,7 @@ const ParkingLot = ({ showFree }) => {
   const getStatusColor = (status) => {
     if (status) return '#E10075';
     else return '#2C2C2C';
-
-    // switch (status) {
-    //   case 'vacant':
-    //     return '#E10075';
-    //   case 'occupied':
-    //     return '#2C2C2C';
-    //   default:
-    //     return '#2C2C2C';
-    // }
   };
-
-  // useEffect(() => {
-  //   leftParkingSpots = parkingData.slice(0, 5);
-  //   rightParkingSpotsLeft = parkingData.slice(5, 10);
-  //   rightParkingSpotsRight = parkingData.slice(10);
-  //   const updatedVacantSpots = parkingData.filter((spot) => spot.status === 'vacant').length;
-  //   setVacantSpots(updatedVacantSpots);
-  // }, [parkingData]);
 
   const handleCreateBooking = () => {
     // Add logic to handle the creation of a booking
@@ -141,16 +125,9 @@ const ParkingLot = ({ showFree }) => {
                       </PopoverHeader>
                       <PopoverBody>
                         {spot.availability ? (
-                          <Button
-                            w='100%'
-                            bg='#E10075'
-                            color='white'
-                            _hover={{ bgColor: '#C5006A' }}
-                          >
-                            Book this spot
-                          </Button>
+                          <BookSpotButton spotNumber={spot.spotNumber} refreshData={refreshData} />
                         ) : (
-                          'occupied'
+                          <OccupiedPopoverBody spotNumber={spot.spotNumber} />
                         )}
                       </PopoverBody>
                     </PopoverContent>
@@ -210,16 +187,9 @@ const ParkingLot = ({ showFree }) => {
                       </PopoverHeader>
                       <PopoverBody>
                         {spot.availability ? (
-                          <Button
-                            w='100%'
-                            bg='#E10075'
-                            color='white'
-                            _hover={{ bgColor: '#C5006A' }}
-                          >
-                            Book this spot
-                          </Button>
+                          <BookSpotButton spotNumber={spot.spotNumber} refreshData={refreshData} />
                         ) : (
-                          'occupied'
+                          <OccupiedPopoverBody spotNumber={spot.spotNumber} />
                         )}
                       </PopoverBody>
                     </PopoverContent>
@@ -279,16 +249,9 @@ const ParkingLot = ({ showFree }) => {
                       </PopoverHeader>
                       <PopoverBody>
                         {spot.availability ? (
-                          <Button
-                            w='100%'
-                            bg='#E10075'
-                            color='white'
-                            _hover={{ bgColor: '#C5006A' }}
-                          >
-                            Book this spot
-                          </Button>
+                          <BookSpotButton spotNumber={spot.spotNumber} refreshData={refreshData} />
                         ) : (
-                          'occupied'
+                          <OccupiedPopoverBody spotNumber={spot.spotNumber} />
                         )}
                       </PopoverBody>
                     </PopoverContent>
