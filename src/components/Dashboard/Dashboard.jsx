@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -143,6 +143,9 @@ const Dashboard = () => {
                 </Td>
               </Tr>
               <Tr>
+                <Td borderBottom='1px solid' borderColor='gray.200'>
+                  Škoda Octavia
+                </Td>
                 <Td borderBottom='1px solid' borderColor='gray.200'>
                   Škoda Octavia
                 </Td>
