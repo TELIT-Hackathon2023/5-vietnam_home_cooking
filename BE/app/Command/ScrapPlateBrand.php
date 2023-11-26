@@ -50,13 +50,14 @@ class ScrapPlateBrand extends Command
         }
 
         $dataFileContent .= "]";
+        var_dump($dataFileContent);
         $file = 'data.json';
         file_put_contents($file, $dataFileContent);
         $pythonScript = 'scrap.py';
         shell_exec("python3 $pythonScript '$file'");
         $jsonContent = file_get_contents($file);
         $data = json_decode($jsonContent, true);
-
+        var_dump($data);
         foreach ($data as $key => $value) {
             $car = $this->employeeCarRepository->findOneCarBy(['carPlateNumber' => $key]);
             $this->employeeCarRepository->updateBrand($car->getId(), $value);
