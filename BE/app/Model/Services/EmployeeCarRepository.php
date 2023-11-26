@@ -119,4 +119,15 @@ class EmployeeCarRepository extends EntityRepository {
         return $employeeCar;
     }
 
+
+    public function deleteCar(int $id): EmployeeCar
+    {
+        $employeeCar = $this->find($id);
+
+        $this->em->remove($employeeCar);
+        $this->em->flush();
+
+        return $employeeCar;
+    }
+
 }

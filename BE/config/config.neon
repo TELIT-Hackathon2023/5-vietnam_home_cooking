@@ -36,6 +36,9 @@ services:
 	- App\Controllers\GetEmployeeCarsController
 	- App\Controllers\GetFreeSpotsController
 	- App\Controllers\GetAllSpotsController
+	- App\Controllers\MakeReservationController
+	- App\Controllers\DeleteEmployeeCarController
+
 	SessionRepository:
 	    type: App\Model\Services\EmployeeRepository
 	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\Employee')
@@ -45,3 +48,9 @@ services:
 	ParkingSpotRepository:
 	    type: App\Model\Services\ParkingSpotRepository
 	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\ParkingSpot')
+	ReservationRepository:
+	    type: App\Model\Services\ReservationRepository
+	    factory: @Doctrine\ORM\EntityManagerInterface::getRepository('App\Model\Entity\Reservation')
+	commands.foo:
+	    class: App\Command\ScrapPlateBrand
+	    tags: [console.command: app:scrap:plate:brand]
