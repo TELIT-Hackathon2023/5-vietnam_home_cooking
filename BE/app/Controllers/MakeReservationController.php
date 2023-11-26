@@ -65,16 +65,26 @@ final class MakeReservationController extends AbstractController
                     return new JsonResponse($this->apiResponseFormatter->formatError("404", "plateNumber doesnt exists"), IResponse::S404_NotFound);
                 } else {
 
+                    if ($values->spotNumber == NULL) {
+                        $from = DateTime::createFromFormat('Y-m-d H:i:s', $values->from);
+                        $to = DateTime::createFromFormat('Y-m-d H:i:s', $values->to);
+                        $this->reservationRepository->create($user, NULL, $employeeCar, $from, $to, true);
+                        return new JsonResponse($this->apiResponseFormatter->formatMessage('added to queue'), IResponse::S200_OK);
+                    }
+
                     $parkingSpot = $this->parkingSpotRepository->findOneSpotBy(['number' => $values->spotNumber]);
-                    if ($parkingSpot === null || !$parkingSpot->isFree()) {
+                    if ($parkingSpot === null) {
                         return new JsonResponse($this->apiResponseFormatter->formatError("404", "spot with number " . $values->spotNumber . " doesnt exists or is not free"), IResponse::S404_NotFound);
+                    } else if (!$parkingSpot->isFree()){
+                        $from = DateTime::createFromFormat('Y-m-d H:i:s', $values->from);
+                        $to = DateTime::createFromFormat('Y-m-d H:i:s', $values->to);
+                        $this->reservationRepository->create($user, NULL, $employeeCar, $from, $to, true);
+                        return new JsonResponse($this->apiResponseFormatter->formatMessage('added to queue'), IResponse::S200_OK);
                     } else {
                         $from = DateTime::createFromFormat('Y-m-d H:i:s', $values->from);
                         $to = DateTime::createFromFormat('Y-m-d H:i:s', $values->to);
-
                         $this->reservationRepository->create($user, $parkingSpot, $employeeCar, $from, $to);
                         $this->parkingSpotRepository->makeUnavailable($parkingSpot->getId());
-
                         return new JsonResponse($this->apiResponseFormatter->formatMessage('reservation created successful'), IResponse::S200_OK);
                     }
 

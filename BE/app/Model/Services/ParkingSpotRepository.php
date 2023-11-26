@@ -118,4 +118,23 @@ class ParkingSpotRepository extends EntityRepository {
         return $parkingSpot;
     }
 
+    /**
+     * @param $id
+     * @return ParkingSpot
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws TransactionRequiredException
+     */
+    public function makeAvailable($id): ParkingSpot
+    {
+        $parkingSpot = $this->getById($id);
+        $parkingSpot->setFree(true);
+
+        $this->em->persist($parkingSpot);
+        $this->em->flush();
+
+        return $parkingSpot;
+    }
+
 }

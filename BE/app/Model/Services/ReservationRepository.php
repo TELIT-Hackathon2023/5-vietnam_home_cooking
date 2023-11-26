@@ -84,15 +84,16 @@ class ReservationRepository extends EntityRepository {
 
     /**
      * @param Employee $employee
-     * @param ParkingSpot $parkingSpot
+     * @param ParkingSpot|null $parkingSpot
+     * @param EmployeeCar $employeeCar
      * @param \DateTime $from
      * @param \DateTime $to
-     * @param EmployeeCar $employeeCar
+     * @param bool $waiting
      * @return Reservation
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create(Employee $employee, ParkingSpot $parkingSpot, EmployeeCar $employeeCar, \DateTime $from, \DateTime $to): Reservation
+    public function create(Employee $employee, ParkingSpot|null $parkingSpot, EmployeeCar $employeeCar, \DateTime $from, \DateTime $to, bool $waiting = false): Reservation
     {
         $reservation = new Reservation;
         $reservation->setEmployee($employee);
@@ -100,11 +101,27 @@ class ReservationRepository extends EntityRepository {
         $reservation->setEmployeeCar($employeeCar);
         $reservation->setDateFrom($from);
         $reservation->setDateTo($to);
+        $reservation->setWaiting($waiting);
+        $reservation->setCreatedAt(new \DateTime());
 
         $this->em->persist($reservation);
         $this->em->flush();
 
         return $reservation;
+    }
+
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
+    public function deleteReservation(int $id)
+    {
+        $employeeCar = $this->find($id);
+
+        $this->em->remove($employeeCar);
+        $this->em->flush();
+
+        return $employeeCar;
     }
 
 }
