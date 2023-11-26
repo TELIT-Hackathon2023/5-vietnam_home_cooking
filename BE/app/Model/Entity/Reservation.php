@@ -36,7 +36,7 @@ class Reservation
     /**
      * @ORM\ManyToOne(targetEntity="ParkingSpot")
      * @ORM\JoinColumn(onDelete="CASCADE")
-     * @var ParkingSpot
+     * @var ParkingSpot|null
      */
     private $spot;
 
@@ -60,6 +60,20 @@ class Reservation
      * @var DateTime
      */
     private $dateTo;
+
+    /**
+     *
+     * @ORM\Column(type="boolean")
+     * @var boolean
+     */
+    private $waiting;
+
+    /**
+     *
+     * @ORM\Column(type="datetime", nullable = true)
+     * @var DateTime
+     */
+    private $createdAt;
 
     /**
      * @return int
@@ -94,17 +108,17 @@ class Reservation
     }
 
     /**
-     * @return ParkingSpot
+     * @return ParkingSpot|null
      */
-    public function getSpot(): ParkingSpot
+    public function getSpot(): ParkingSpot|null
     {
         return $this->spot;
     }
 
     /**
-     * @param ParkingSpot $spot
+     * @param ParkingSpot|null $spot
      */
-    public function setSpot(ParkingSpot $spot): void
+    public function setSpot(ParkingSpot|null $spot): void
     {
         $this->spot = $spot;
     }
@@ -155,6 +169,38 @@ class Reservation
     public function setDateTo(DateTime $dateTo): void
     {
         $this->dateTo = $dateTo;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWaiting(): bool
+    {
+        return $this->waiting;
+    }
+
+    /**
+     * @param bool $waiting
+     */
+    public function setWaiting(bool $waiting): void
+    {
+        $this->waiting = $waiting;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 
 }
