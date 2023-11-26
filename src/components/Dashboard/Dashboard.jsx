@@ -141,7 +141,7 @@ const Dashboard = () => {
           padding={'1rem'}
         >
           <Heading size='md' fontWeight={500}>
-            Telecom parking slots
+            Telekom parking slots
           </Heading>
           <ParkingLot showFree={true} />
         </Box>

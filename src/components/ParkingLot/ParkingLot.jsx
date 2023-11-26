@@ -1,7 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Text, Button, Stack, Spinner, Container } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Text,
+  Button,
+  Stack,
+  Spinner,
+  Container,
+  PopoverBody,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
+  Popover,
+  VStack,
+  HStack,
+} from '@chakra-ui/react';
 import './ParkingLot.css';
 import axios from 'axios';
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons';
 
 const ParkingLot = ({ showFree }) => {
   const initialParkingData = [
@@ -30,6 +48,7 @@ const ParkingLot = ({ showFree }) => {
     axios.get('https://telekomparking.website.tuke.sk/api/all-spots').then((res) => {
       setIsLoadingData(false);
       setParkingData(res.data.payload);
+      console.log(res.data.payload);
       setVacantSpots(res.data.payload.filter((spot) => spot.availability).length);
     });
   }, []);
@@ -71,18 +90,13 @@ const ParkingLot = ({ showFree }) => {
         <Spinner size='xl' />
       ) : (
         <>
-          <Flex
-            className='parking-area'
-            marginTop={'1rem'}
-            position='relative'
-            justifyContent='center'
-          >
+          <Flex className='parking-area' position='relative' justifyContent='center'>
             <Flex flexDirection='column'>
               {leftParkingSpots.map((spot, index) => (
                 <Box
                   key={spot.spotNumber}
                   className={`park-area`}
-                  width={['100%', '100%', '5rem']} // Adjust width as needed
+                  width={['100%', '100%', '6rem']} // Adjust width as needed
                   height={['3rem', '3rem', '3rem']}
                   borderLeft='2px solid #ACACAC'
                   borderTop='2px solid #ACACAC'
@@ -94,20 +108,53 @@ const ParkingLot = ({ showFree }) => {
                   position='relative'
                   color={'white'}
                 >
-                  <Box
-                    className='parking-spot'
-                    position='absolute'
-                    bottom='50%'
-                    right='50%'
-                    transform='translate(50%, 50%)'
-                    width='80%' // Adjust width as needed
-                    height='2rem'
-                    borderRadius='10px'
-                    backgroundColor={getStatusColor(spot.availability)}
-                    zIndex={0}
-                  >
-                    {spot.spotNumber}
-                  </Box>
+                  <Popover placement='top'>
+                    <PopoverTrigger>
+                      <Box
+                        as='button'
+                        className='parking-spot'
+                        position='absolute'
+                        bottom='50%'
+                        right='50%'
+                        transform='translate(50%, 50%)'
+                        width='80%' // Adjust width as needed
+                        height='2rem'
+                        borderRadius='10px'
+                        zIndex={0}
+                        backgroundColor={getStatusColor(spot.availability)}
+                      >
+                        {spot.spotNumber}
+                      </Box>
+                    </PopoverTrigger>
+                    <PopoverContent color='#2C2C2C' borderWidth='2px'>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader>
+                        <HStack>
+                          {spot.availability ? (
+                            <CheckIcon color='#32D560' />
+                          ) : (
+                            <CloseIcon color='#E83434' />
+                          )}
+                          <Text>{spot.availability ? 'Free' : 'Occupied'}</Text>
+                        </HStack>
+                      </PopoverHeader>
+                      <PopoverBody>
+                        {spot.availability ? (
+                          <Button
+                            w='100%'
+                            bg='#E10075'
+                            color='white'
+                            _hover={{ bgColor: '#C5006A' }}
+                          >
+                            Book this spot
+                          </Button>
+                        ) : (
+                          'occupied'
+                        )}
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
                 </Box>
               ))}
             </Flex>
@@ -117,7 +164,7 @@ const ParkingLot = ({ showFree }) => {
                 <Box
                   key={spot.spotNumber}
                   className={`park-area`}
-                  width={['100%', '100%', '5rem']} // Adjust width as needed
+                  width={['100%', '100%', '6rem']} // Adjust width as needed
                   height={['3rem', '3rem', '3rem']}
                   borderRight='1px solid #ACACAC'
                   borderTop='2px solid #ACACAC'
@@ -130,20 +177,53 @@ const ParkingLot = ({ showFree }) => {
                   position='relative'
                   color={'white'}
                 >
-                  <Box
-                    className='parking-spot'
-                    position='absolute'
-                    bottom='50%'
-                    left='50%'
-                    transform='translate(-50%, 50%)'
-                    width='80%' // Adjust width as needed
-                    height='2rem'
-                    borderRadius='10px'
-                    backgroundColor={getStatusColor(spot.availability)}
-                    zIndex={0}
-                  >
-                    {spot.spotNumber}
-                  </Box>
+                  <Popover placement='top'>
+                    <PopoverTrigger>
+                      <Box
+                        as='button'
+                        className='parking-spot'
+                        position='absolute'
+                        bottom='50%'
+                        right='50%'
+                        transform='translate(50%, 50%)'
+                        width='80%' // Adjust width as needed
+                        height='2rem'
+                        borderRadius='10px'
+                        zIndex={0}
+                        backgroundColor={getStatusColor(spot.availability)}
+                      >
+                        {spot.spotNumber}
+                      </Box>
+                    </PopoverTrigger>
+                    <PopoverContent color='#2C2C2C' borderWidth='2px'>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader>
+                        <HStack>
+                          {spot.availability ? (
+                            <CheckIcon color='#32D560' />
+                          ) : (
+                            <CloseIcon color='#E83434' />
+                          )}
+                          <Text>{spot.availability ? 'Free' : 'Occupied'}</Text>
+                        </HStack>
+                      </PopoverHeader>
+                      <PopoverBody>
+                        {spot.availability ? (
+                          <Button
+                            w='100%'
+                            bg='#E10075'
+                            color='white'
+                            _hover={{ bgColor: '#C5006A' }}
+                          >
+                            Book this spot
+                          </Button>
+                        ) : (
+                          'occupied'
+                        )}
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
                 </Box>
               ))}
             </Flex>
@@ -153,7 +233,7 @@ const ParkingLot = ({ showFree }) => {
                 <Box
                   key={spot.spotNumber}
                   className={`park-area`}
-                  width={['100%', '100%', '5rem']} // Adjust width as needed
+                  width={['100%', '100%', '6rem']} // Adjust width as needed
                   height={['3rem', '3rem', '3rem']}
                   borderLeft='1px solid #ACACAC'
                   borderTop='2px solid #ACACAC'
@@ -166,20 +246,53 @@ const ParkingLot = ({ showFree }) => {
                   position='relative'
                   color={'white'}
                 >
-                  <Box
-                    className='parking-spot'
-                    position='absolute'
-                    bottom='50%'
-                    right='50%'
-                    transform='translate(50%, 50%)'
-                    width='80%' // Adjust width as needed
-                    height='2rem'
-                    borderRadius='10px'
-                    zIndex={0}
-                    backgroundColor={getStatusColor(spot.availability)}
-                  >
-                    {spot.spotNumber}
-                  </Box>
+                  <Popover placement='top'>
+                    <PopoverTrigger>
+                      <Box
+                        as='button'
+                        className='parking-spot'
+                        position='absolute'
+                        bottom='50%'
+                        right='50%'
+                        transform='translate(50%, 50%)'
+                        width='80%' // Adjust width as needed
+                        height='2rem'
+                        borderRadius='10px'
+                        zIndex={0}
+                        backgroundColor={getStatusColor(spot.availability)}
+                      >
+                        {spot.spotNumber}
+                      </Box>
+                    </PopoverTrigger>
+                    <PopoverContent color='#2C2C2C' borderWidth='2px'>
+                      <PopoverArrow />
+                      <PopoverCloseButton />
+                      <PopoverHeader>
+                        <HStack>
+                          {spot.availability ? (
+                            <CheckIcon color='#32D560' />
+                          ) : (
+                            <CloseIcon color='#E83434' />
+                          )}
+                          <Text>{spot.availability ? 'Free' : 'Occupied'}</Text>
+                        </HStack>
+                      </PopoverHeader>
+                      <PopoverBody>
+                        {spot.availability ? (
+                          <Button
+                            w='100%'
+                            bg='#E10075'
+                            color='white'
+                            _hover={{ bgColor: '#C5006A' }}
+                          >
+                            Book this spot
+                          </Button>
+                        ) : (
+                          'occupied'
+                        )}
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
                 </Box>
               ))}
             </Flex>

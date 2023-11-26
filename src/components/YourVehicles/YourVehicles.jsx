@@ -31,13 +31,12 @@ const YourVehicles = () => {
             });
     };
 
-    return (
-        <>
-            <Table variant='simple' colorScheme='whiteAlpha'>
-                <Tbody>
-                    {userData.vehicles.map((vehicle) => {
-                        const imgPath = '/src/assets/brands/' + vehicle.carBrand + '.png';
-                        console.log(imgPath);
+  return (
+    <>
+      <Table variant='simple' colorScheme='whiteAlpha'>
+        <Tbody>
+          {userData.vehicles.map((vehicle) => {
+            const imgPath = '/src/assets/brands/' + vehicle.carBrand + '.png';
 
                         return (
                             <Tr key={vehicle.plateNumber}>

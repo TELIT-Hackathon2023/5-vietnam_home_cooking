@@ -10,7 +10,7 @@ const Booking = () => {
         Booking
       </Text>
       <Grid h='100%' p='4' templateRows='repeat(2, 1fr)' templateColumns='repeat(4, 1fr)' gap={4}>
-        <GridItem colSpan={2} />
+        <GridItem colSpan={2} bg='lightgrey' borderRadius='0.5rem'></GridItem>
         <GridItem colSpan={2}>
           <ParkingLot showFree={false} />
         </GridItem>
