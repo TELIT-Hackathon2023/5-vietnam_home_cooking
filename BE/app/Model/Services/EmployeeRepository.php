@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * This file is part of the 2050 project.
+ * This file is part of the Telekom Parking App project.
  * Copyright (c) 2023 Slavomír Švigar <slavo.svigar@gmail.com>
  */
 
@@ -75,13 +75,12 @@ class EmployeeRepository extends EntityRepository {
      * @param string $mobileNUmber
      * @param string $email
      * @param int $companyId
-     * @param string $plateNumber
      * @param string $password
      * @return Employee
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create(string $name, string $surname, string $mobileNUmber, string $email, int $companyId, string $plateNumber, string $password): Employee
+    public function create(string $name, string $surname, string $mobileNUmber, string $email, int $companyId, string $password): Employee
     {
         $employee = new Employee;
         $employee->setName($name);
@@ -89,7 +88,6 @@ class EmployeeRepository extends EntityRepository {
         $employee->setMobileNumber($mobileNUmber);
         $employee->setEmail($email);
         $employee->setCompanyId($companyId);
-        $employee->setPlateNumber($plateNumber);
         $employee->setEnabled(true);
         $employee->setPassword($password);
 

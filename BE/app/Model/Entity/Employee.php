@@ -71,13 +71,6 @@ class Employee
 
     /**
      *
-     * @ORM\Column(type="string", nullable = false)
-     * @var string
-     */
-    private $plateNumber;
-
-    /**
-     *
      * @ORM\Column(type="datetime", nullable = true)
      * @var DateTime
      */
@@ -201,22 +194,6 @@ class Employee
     public function setCompanyId(int $companyId): void
     {
         $this->companyId = $companyId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPlateNumber(): string
-    {
-        return $this->plateNumber;
-    }
-
-    /**
-     * @param string $plateNumber
-     */
-    public function setPlateNumber(string $plateNumber): void
-    {
-        $this->plateNumber = $plateNumber;
     }
 
     /**
