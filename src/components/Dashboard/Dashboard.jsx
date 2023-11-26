@@ -41,20 +41,36 @@ const Dashboard = () => {
             Currently booked
           </Heading>
 
-          <Table variant='simple' colorScheme='whiteAlpha'>
+          <Table variant='simple' colorScheme='whiteAlpha' align={'center'}>
             <Tbody>
               {/* Add your table rows here */}
               <Tr>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
+                <Td
+                  borderBottom='1px solid'
+                  borderColor='gray.200'
+                  padding={'1rem 0 0 0 !important'}
+                >
                   12:00 PM
                 </Td>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
+                <Td
+                  borderBottom='1px solid'
+                  borderColor='gray.200'
+                  padding={'1rem 0 0 0 !important'}
+                >
                   2023-11-25
                 </Td>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
+                <Td
+                  borderBottom='1px solid'
+                  borderColor='gray.200'
+                  padding={'1rem 0 0 0 !important'}
+                >
                   1
                 </Td>
-                <Td borderBottom='1px solid' borderColor='gray.200'>
+                <Td
+                  borderBottom='1px solid'
+                  borderColor='gray.200'
+                  padding={'1rem 0 0 0 !important'}
+                >
                   ABC 123
                 </Td>
               </Tr>
@@ -78,8 +94,9 @@ const Dashboard = () => {
           padding={'1rem'}
         >
           <Heading size='md' fontWeight={500}>
-            Telekom parking slots
+            Telecom parking slots
           </Heading>
+          <ParkingLot></ParkingLot>
         </Box>
       </Flex>
 
@@ -104,7 +121,7 @@ const Dashboard = () => {
             </Heading>
             <Spacer />
             <Box>
-              <Text fontWeight={600} color={'#E10075'}>
+              <Text fontWeight={600} color={'#E10075'} cursor={'pointer'}>
                 Edit
               </Text>
             </Box>

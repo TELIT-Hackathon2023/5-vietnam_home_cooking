@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text, Button, Stack } from '@chakra-ui/react';
 
 const ParkingLot = () => {
   const initialParkingData = [
@@ -46,103 +46,125 @@ const ParkingLot = () => {
     setVacantSpots(updatedVacantSpots);
   }, [parkingData]);
 
+  const handleCreateBooking = () => {
+    // Add logic to handle the creation of a booking
+    console.log('Creating booking...');
+  };
+
   return (
-    <Flex className='parking-area' marginTop={'2rem'}>
-      <Flex flexDirection='column'>
-        {leftParkingSpots.map((slot) => (
-          <Box
-            key={slot.number}
-            className={`park-area`}
-            width={['100%', '100%', '40%']} // Adjust width as needed
-            height={['5rem', '5rem', '5rem']}
-            borderLeft='2px solid #ACACAC'
-            borderTop='2px solid #ACACAC'
-            display='flex'
-            alignItems='center'
-            justifyContent='center'
-            marginRight={['0', '0', '2%']} // Adjust margin as needed
-            marginLeft={['0', '0', '2%']} // Adjust margin as needed
-            position='relative'
-            color={'white'}
-          >
-            <Text zIndex={2}>{slot.number}</Text>
+    <React.Fragment>
+      <Flex className='parking-area' marginTop={'1rem'} position='relative' justifyContent='center'>
+        <Flex flexDirection='column'>
+          {leftParkingSpots.map((slot) => (
             <Box
-              position='absolute'
-              bottom='50%'
-              right='50%'
-              transform='translate(50%, 50%)'
-              width='80%' // Adjust width as needed
-              height='3rem'
-              borderRadius='10px'
-              backgroundColor={getStatusColor(slot.status)}
-              zIndex={0}
-            ></Box>
-          </Box>
-        ))}
-      </Flex>
+              key={slot.number}
+              className={`park-area`}
+              width={['100%', '100%', '5rem']} // Adjust width as needed
+              height={['3rem', '3rem', '3rem']}
+              borderLeft='2px solid #ACACAC'
+              borderTop='2px solid #ACACAC'
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              marginBottom={['2%', '2%', '2%']} // Adjust margin as needed
+              position='relative'
+              color={'white'}
+            >
+              <Text zIndex={2}>{slot.number}</Text>
+              <Box
+                position='absolute'
+                bottom='50%'
+                right='50%'
+                transform='translate(50%, 50%)'
+                width='80%' // Adjust width as needed
+                height='2rem'
+                borderRadius='10px'
+                backgroundColor={getStatusColor(slot.status)}
+                zIndex={0}
+              ></Box>
+            </Box>
+          ))}
+        </Flex>
 
-      <Flex flexDirection='column' alignItems='flex-end'>
-        {rightParkingSpotsLeft.map((slot) => (
-          <Box
-            key={slot.number}
-            className={`park-area`}
-            width={['100%', '100%', '40%']} // Adjust width as needed
-            height={['5rem', '5rem', '5rem']}
-            borderRight='1px solid #ACACAC'
-            borderTop='2px solid #ACACAC'
-            display='flex'
-            alignItems='center'
-            justifyContent='center'
-            position='relative'
-            color={'white'}
-          >
-            <Text zIndex={2}>{slot.number}</Text>
+        <Flex flexDirection='column' alignItems='flex-end' marginLeft={'4rem'}>
+          {rightParkingSpotsLeft.map((slot) => (
             <Box
-              position='absolute'
-              bottom='50%'
-              left='50%'
-              transform='translate(-50%, 50%)'
-              width='80%' // Adjust width as needed
-              height='3rem'
-              borderRadius='10px'
-              backgroundColor={getStatusColor(slot.status)}
-              zIndex={0}
-            ></Box>
-          </Box>
-        ))}
-      </Flex>
+              key={slot.number}
+              className={`park-area`}
+              width={['100%', '100%', '5rem']} // Adjust width as needed
+              height={['3rem', '3rem', '3rem']}
+              borderRight='1px solid #ACACAC'
+              borderTop='2px solid #ACACAC'
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              position='relative'
+              color={'white'}
+            >
+              <Text zIndex={2}>{slot.number}</Text>
+              <Box
+                position='absolute'
+                bottom='50%'
+                left='50%'
+                transform='translate(-50%, 50%)'
+                width='80%' // Adjust width as needed
+                height='2rem'
+                borderRadius='10px'
+                backgroundColor={getStatusColor(slot.status)}
+                zIndex={0}
+              ></Box>
+            </Box>
+          ))}
+        </Flex>
 
-      <Flex flexDirection='column'>
-        {rightParkingSpotsRight.map((slot) => (
-          <Box
-            key={slot.number}
-            className={`park-area`}
-            width={['100%', '100%', '40%']} // Adjust width as needed
-            height={['5rem', '5rem', '5rem']}
-            borderLeft='1px solid #ACACAC'
-            borderTop='2px solid #ACACAC'
-            display='flex'
-            alignItems='center'
-            justifyContent='center'
-            position='relative'
-            color={'white'}
-          >
-            <Text zIndex={2}>{slot.number}</Text>
+        <Flex flexDirection='column'>
+          {rightParkingSpotsRight.map((slot) => (
             <Box
-              position='absolute'
-              bottom='50%'
-              right='50%'
-              transform='translate(50%, 50%)'
-              width='80%' // Adjust width as needed
-              height='3rem'
-              borderRadius='10px'
-              zIndex={0}
-              backgroundColor={getStatusColor(slot.status)}
-            ></Box>
-          </Box>
-        ))}
+              key={slot.number}
+              className={`park-area`}
+              width={['100%', '100%', '5rem']} // Adjust width as needed
+              height={['3rem', '3rem', '3rem']}
+              borderLeft='1px solid #ACACAC'
+              borderTop='2px solid #ACACAC'
+              display='flex'
+              alignItems='center'
+              justifyContent='center'
+              position='relative'
+              color={'white'}
+            >
+              <Text zIndex={2}>{slot.number}</Text>
+              <Box
+                position='absolute'
+                bottom='50%'
+                right='50%'
+                transform='translate(50%, 50%)'
+                width='80%' // Adjust width as needed
+                height='2rem'
+                borderRadius='10px'
+                zIndex={0}
+                backgroundColor={getStatusColor(slot.status)}
+              ></Box>
+            </Box>
+          ))}
+        </Flex>
       </Flex>
-    </Flex>
+      <Stack direction={'row'} marginTop={'2%'} align={'baseline'}>
+        {/* Display the number of available spots */}
+        <Text fontSize='3xl' color={'#E10075'}>{`${vacantSpots}`}</Text>
+        <Text fontSize='md'>{`free slots currently`}</Text>
+
+        {/* Create Booking Button */}
+        <Button
+          variant={'outline'}
+          color={'#E10075'}
+          bgColor={''}
+          outlineColor={'#E10075'}
+          onClick={handleCreateBooking}
+        >
+          Create Booking
+        </Button>
+      </Stack>
+    </React.Fragment>
   );
 };
 
