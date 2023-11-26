@@ -59,6 +59,18 @@ class ParkingSpotRepository extends EntityRepository {
 
     /**
      * @param array $criteria
+     * @param array|null $orderBy
+     * @param null $limit
+     * @param null $offset
+     * @return array
+     */
+    public function findParkingSpotsBy(array $criteria = array(), array|null $orderBy = array(), $limit = null, $offset = null): array
+    {
+        return $this->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * @param array $criteria
      * @return int
      */
     public function count(array $criteria = array()): int
