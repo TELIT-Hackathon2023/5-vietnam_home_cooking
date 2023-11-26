@@ -1,4 +1,4 @@
-export const telekomEmailRegex = /^[a-zA-Z0-9._%+-]+@telekom\.[a-zA-Z]{2,}$/;
+export const telekomEmailRegex = /^[a-zA-Z0-9._%+-]+@t-systems\.[a-zA-Z]{2,}$/;
 export const phoneNumberRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
 export const licensePlateRegexPatterns = {
   US: /^[A-Z0-9]{1,7}$/,
